@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>PeoplePro Installer | Step-3</title>
+    <title>HrmSolution Installer | Step-3</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('install-assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('install-assets/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -13,7 +13,7 @@
 		<div class='wrapper'>
 		    <header>
 	            <img src="{{ asset('install-assets/images/logo.png') }}" alt="Logo"/>
-	            <h1 class="text-center">PeoplePro SaaS Auto Installer</h1>
+	            <h1 class="text-center">HrmSolution SaaS Auto Installer</h1>
 
                 @include('includes.session_message')
 	        </header>
@@ -42,7 +42,7 @@
 		                <input type='text' required placeholder="Ex: http://peopleprohrmsaas.com" class="form-control" name="central_domain">
 
                         <label>DB Prefix</label>
-		                <input type='text' required placeholder="Ex: peoplepro_" class="form-control" name="db_prefix">
+		                <input type='text' required placeholder="Ex: hrmsolution_" class="form-control" name="db_prefix">
 
                         <label>Database Host</label>
 		                <input type='text' required placeholder="Ex: localhost" class="form-control" name="db_host">
@@ -51,7 +51,7 @@
 		                <input type='number' required placeholder="Ex: 3306" class="form-control" name="db_port">
 
                         <label>Database Username</label>
-		                <input type='text' required placeholder="Ex: peoplepro2023" class="form-control" name="db_username">
+		                <input type='text' required placeholder="Ex: hrmsolution2023" class="form-control" name="db_username">
 
                         <label>Database Password</label>
 		                <input type='password' required placeholder="Ex: PXsfdf1542" class="form-control" name="db_password">

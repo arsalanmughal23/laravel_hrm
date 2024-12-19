@@ -6,7 +6,7 @@
                 <a id="toggle-btn" href="#" class="menu-btn"><i class="dripicons-menu"> </i></a>
                 <span class="brand-big" id="site_logo_main">
                     @if($general_settings->site_logo)
-						<img src="{{asset('/images/logo/'.$general_settings->site_logo)}}" width="140" height="70">
+						<img src="{{asset('/images/logo/'.$general_settings->site_logo)}}" width="540" height="300">
                         &nbsp; &nbsp;
                     @endif
                 </span>

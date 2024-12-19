@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>PeoplePro Installer | Step-2</title>
+    <title>HrmSolution Installer | Step-2</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('install-assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('install-assets/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -13,7 +13,7 @@
         <div class='wrapper'>
             <header>
 	            <img src="{{ asset('install-assets/images/peopleprocrm.png') }}" alt="Logo"/>
-                <h1 class="text-center">PeoplePro CRM Auto Installer</h1>
+                <h1 class="text-center">HrmSolution CRM Auto Installer</h1>
             </header>
             <hr>
             <div class="content">
@@ -26,7 +26,7 @@
                     $passed .= '1';
 
                 } else {
-                    $ltext .= '<i class="fa fa-close"></i>PeoplePro needs at least PHP version  7.4, Your PHP Version is: ' . PHP_VERSION . '<br/>';
+                    $ltext .= '<i class="fa fa-close"></i>HrmSolution needs at least PHP version  7.4, Your PHP Version is: ' . PHP_VERSION . '<br/>';
                     $passed .= '0';
                 }
 
@@ -63,7 +63,7 @@
 
                 <?php else: ?>
 
-                <br/><?php echo $ltext; ?><br/>Sorry. The requirements of PeoplePro is not available on your server. Please contact with us- hello@lion-coders.com with this code- <?php echo $passed; ?> Or contact with your server administrator.<br><br>
+                <br/><?php echo $ltext; ?><br/>Sorry. The requirements of HrmSolution is not available on your server. Please contact with us- hello@lion-coders.com with this code- <?php echo $passed; ?> Or contact with your server administrator.<br><br>
                 <a href="#" class="btn btn-primary disabled">Correct The Problem To Continue</a>
 
                 <?php endif ?>

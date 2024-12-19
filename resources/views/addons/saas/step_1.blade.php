@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>PeoplePro Installer | Step-1</title>
+    <title>HrmSolution Installer | Step-1</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('install-assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('install-assets/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -13,7 +13,7 @@
 		<div class="wrapper">
 	        <header>
 	            <img src="{{ asset('install-assets/images/logo.png') }}" alt="Logo"/>
-	            <h1 class="text-center">PeoplePro SaaS  Auto Installer</h1>
+	            <h1 class="text-center">HrmSolution SaaS  Auto Installer</h1>
 	        </header>
             <hr>
             <div class="content text-center">
@@ -29,7 +29,7 @@
                         <br>
                         But if you want to run the SaaS application in your existing database then you have to remove all tables first of your current database otherwise you will get error.
                     </p>
-                    <p> <strong>N.B: </strong> If you want to use your peoplepro existing database as a tenant after install then you have to follow the points given below -</p>
+                    <p> <strong>N.B: </strong> If you want to use your hrmsolution existing database as a tenant after install then you have to follow the points given below -</p>
                     <ul>
                         <li>You have to backup your existing database according the instruction. Please read the <a href="https://peopleprohrmsaas.com/central-documentation#integratePeopleproDB" target="__blank">documentation</a> first.</li>
                         <li>You have to reassign the role-permissin for the employees</li>
