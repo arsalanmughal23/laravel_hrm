@@ -58,7 +58,7 @@
 
                 <?php if ($passed == '1111'): ?>
                     <br/><?php echo $ltext; ?><br/>
-                    <h4>Great! System Test Completed. You can run PeopleProSaaS on your server. Click Continue For Next Step.</h4>
+                    <h4>Great! System Test Completed. You can run HrmSolutionSaaS on your server. Click Continue For Next Step.</h4>
                     <a href="{{ route('crm-install-step-3') }}" class="btn btn-primary">Continue</a>
 
                 <?php else: ?>

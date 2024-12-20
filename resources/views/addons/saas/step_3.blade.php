@@ -36,7 +36,7 @@
 		                <input type='text' required placeholder="Ex: 5F5S5OF81XXXXXXXXXX" class="form-control" name="cpanel_api_key">
 
                         <label>cPanel User Name</label>
-		                <input type='text' required placeholder="Ex: peopleprosaas" class="form-control" name="cpanel_username">
+		                <input type='text' required placeholder="Ex: hrmsolutionsaas" class="form-control" name="cpanel_username">
 
                         <label>Root Domain</label>
 		                <input type='text' required placeholder="Ex: http://peopleprohrmsaas.com" class="form-control" name="central_domain">
@@ -57,7 +57,7 @@
 		                <input type='password' required placeholder="Ex: PXsfdf1542" class="form-control" name="db_password">
 
                         <label>Database Name</label>
-		                <input type='text' placeholder="Ex: peopleprosaas_db" required class="form-control" name="db_name">
+		                <input type='text' placeholder="Ex: hrmsolution_db" required class="form-control" name="db_name">
 
                         <button type='submit' class='btn btn-primary btn-block'>Submit</button>
 		            </fieldset>
