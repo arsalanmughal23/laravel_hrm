@@ -14,7 +14,9 @@ class Employee extends Model
 		'id','first_name','last_name','staff_id','email','contact_no','date_of_birth','gender','status_id','office_shift_id','salary_id','location_id','designation_id', 'company_id', 'department_id','is_active',
 		'role_users_id','permission_role_id','joining_date','exit_date','marital_status','address','city','state','country','zip_code','cv','skype_id','fb_id',
 		'twitter_id','linkedIn_id','blogger_id','basic_salary','payslip_type','leave_id','attendance_id','performance_id','award_id','transfer_id','resignation_id',
-		'travel_id','promotion_id','complain_id','warning_id','termination_id','attendance_type','total_leave','remaining_leave','pension_type','pension_amount'];
+		'travel_id','promotion_id','complain_id','warning_id','termination_id','attendance_type','total_leave','remaining_leave','pension_type','pension_amount',
+		'reporting_manager_id','allow_manual_attendance','religion_id','country_id','city_id','province_id','station_id','region_id','gl_class_id','sub_deparment_id',
+		'leaving_reason_id','status'];
 
 
 	public function getFullNameAttribute() {
