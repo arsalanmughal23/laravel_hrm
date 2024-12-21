@@ -11,7 +11,7 @@
 /public/sample_file
 /public/ts
 /public/uploads
-/public/vendor
+# /public/vendor
 /public/install0.zip
 /public/samsung.png
 
