@@ -3,7 +3,6 @@
 !/database/migrations/note.txt
 /.phpunit.cache
 
-/public
 /track
 
 /node_modules
