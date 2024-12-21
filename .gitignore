@@ -3,7 +3,13 @@
 !/database/migrations/note.txt
 /.phpunit.cache
 
-/public
+/public/*
+!/public/css
+!/public/fonts
+!/public/images
+!/public/js
+!/public/logo
+
 /track
 
 /node_modules
