@@ -14,13 +14,13 @@ class GeneralSettingSeeder extends Seeder
     {
         GeneralSetting::truncate();
 
-        $siteTitle = "PeoplePro";
+        $siteTitle = "HrmSolution";
         $timeZone = "Asia/Dhaka";
         $dateFormat = "d-m-Y";
 
         GeneralSetting::create([
             'site_title' => $siteTitle,
-            'site_logo'  => "logo.png",
+            'site_logo'  => "hrm_logo.png",
             'time_zone' => $timeZone,
             'currency' => "$",
             'currency_format' => "prefix",

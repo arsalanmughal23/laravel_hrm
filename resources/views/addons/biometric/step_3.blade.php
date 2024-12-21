@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>PeoplePro Installer | Step-3</title>
+    <title>HrmSolution Installer | Step-3</title>
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('install-assets/images/favicon.ico') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="{{ asset('install-assets/css/bootstrap.min.css') }}" rel="stylesheet">
@@ -13,7 +13,7 @@
 		<div class='wrapper'>
 		    <header>
 	            <img src="{{ asset('install-assets/images/logo.png') }}" alt="Logo"/>
-	            <h1 class="text-center">PeoplePro Biometric Attendance Auto Installer</h1>
+	            <h1 class="text-center">HrmSolution Biometric Attendance Auto Installer</h1>
 
                 @include('includes.session_message')
 	        </header>

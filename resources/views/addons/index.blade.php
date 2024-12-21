@@ -8,8 +8,8 @@
                 <img class="card-img-top" src="{{ asset('/images/biometric_attendance_addon_preview_img.png') }}" style="height:250px" alt="Card image cap">
                 <!-- <img class="card-img-top" src="https://codecanyon.img.customer.envatousercontent.com/files/410696268/preview.png?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=c5052325aa34961ecd247838382b7a98" style="height:250px" alt="Card image cap"> -->
                 <div class="card-body">
-                    <h5 class="card-title">Biometric Attendance Addon for PeoplePro HRM, Payroll, Project Management </h5>
-                    <p class="card-text">This addon works in unison with ‘PeoplePro – HRM, Payroll & Project Management’. When installed with PeoplePro, it takes employee/staff attendance data exported from biometric attendance/fingerprint reader devices at your office/factory. This data is then used to calculate employee attendance, salary (payroll) etc.</p>
+                    <h5 class="card-title">Biometric Attendance Addon for HrmSolution HRM, Payroll, Project Management </h5>
+                    <p class="card-text">This addon works in unison with ‘HrmSolution – HRM, Payroll & Project Management’. When installed with HrmSolution, it takes employee/staff attendance data exported from biometric attendance/fingerprint reader devices at your office/factory. This data is then used to calculate employee attendance, salary (payroll) etc.</p>
                     <a href="https://peopleprohrm.com/demo/" target="_blank" class="btn btn-danger p-2">Demo</a>
                     <a href="https://codecanyon.net/item/biometric-attendance-addon-for-peoplepro-hrm-payroll-project-management/40091655" target="_blank" class="btn btn-info p-2">Buy Now</a>
                     <a href="https://peopleprohrm.com/demo/documentation-attendance-device-addon" target="_blank" class="btn btn-warning p-2">Documentation</a>
