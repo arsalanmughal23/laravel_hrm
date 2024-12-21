@@ -10,7 +10,7 @@
 /public/install-assets
 /public/sample_file
 /public/ts
-/public/uploads
+# /public/uploads
 # /public/vendor
 /public/install0.zip
 /public/samsung.png
