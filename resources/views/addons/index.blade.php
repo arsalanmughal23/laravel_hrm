@@ -5,7 +5,8 @@
     <div class="row">
         <div class="col-md-6">
             <div class="card">
-                <img class="card-img-top" src="https://codecanyon.img.customer.envatousercontent.com/files/410696268/preview.png?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=c5052325aa34961ecd247838382b7a98" style="height:250px" alt="Card image cap">
+                <img class="card-img-top" src="{{ asset('/images/biometric_attendance_addon_preview_img.png') }}" style="height:250px" alt="Card image cap">
+                <!-- <img class="card-img-top" src="https://codecanyon.img.customer.envatousercontent.com/files/410696268/preview.png?auto=compress%2Cformat&q=80&fit=crop&crop=top&max-h=8000&max-w=590&s=c5052325aa34961ecd247838382b7a98" style="height:250px" alt="Card image cap"> -->
                 <div class="card-body">
                     <h5 class="card-title">Biometric Attendance Addon for PeoplePro HRM, Payroll, Project Management </h5>
                     <p class="card-text">This addon works in unison with ‘PeoplePro – HRM, Payroll & Project Management’. When installed with PeoplePro, it takes employee/staff attendance data exported from biometric attendance/fingerprint reader devices at your office/factory. This data is then used to calculate employee attendance, salary (payroll) etc.</p>
