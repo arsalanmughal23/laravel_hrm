@@ -3,12 +3,18 @@
 !/database/migrations/note.txt
 /.phpunit.cache
 
-/public/*
-!/public/css
-!/public/fonts
-!/public/images
-!/public/js
-!/public/logo
+
+/public/docs
+/public/icons-reference
+/public/install
+/public/install-assets
+/public/sample_file
+/public/ts
+/public/uploads
+/public/vendor
+/public/install0.zip
+/public/samsung.png
+
 
 /track
 
