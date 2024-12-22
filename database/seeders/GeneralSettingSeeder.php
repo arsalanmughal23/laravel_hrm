@@ -20,7 +20,7 @@ class GeneralSettingSeeder extends Seeder
 
         GeneralSetting::create([
             'site_title' => $siteTitle,
-            'site_logo'  => "hrm_logo.png",
+            'site_logo'  => "logo.png",
             'time_zone' => $timeZone,
             'currency' => "$",
             'currency_format' => "prefix",
