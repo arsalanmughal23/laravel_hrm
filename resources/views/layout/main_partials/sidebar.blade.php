@@ -585,17 +585,6 @@
                             </ul>
                         </li>
                     @endcan
-
-                    @if (Auth::user()->role_users_id===1)
-                        <li>
-                            <a href="{{url('/documentation')}}"> <i class="dripicons-information"></i><span>{{__('file.Documentation')}}</span></a>
-                        </li>
-                        <li class="{{ (request()->is('addons*')) ? 'active' : '' }}">
-                            <a href="{{route('addons')}}"> <i class="dripicons-flag"></i><span>{{__('Addons')}}</span>
-                            </a>
-                        </li>
-                    @endif
-
             </ul>
         </div>
     </div>
