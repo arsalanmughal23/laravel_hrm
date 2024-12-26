@@ -17,11 +17,18 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
 
         $this->call([
+            ConstantSeeder::class,
             CountriesTableSeeder::class,
             GeneralSettingSeeder::class,
             PermissionsSeeder::class,
             RoleSeeder::class,
             UserSeeder::class,
+            ProvinceSeeder::class,
+            CitySeeder::class,
+            StationSeeder::class,
+            ReligionSeeder::class,
+            // DesignationSeeder::class,
+            
         ]);
 
     }
