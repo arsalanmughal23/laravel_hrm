@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('countries', function (Blueprint $table) {
             $table->unsignedBigInteger('status_id')->nullable()->after('name');
-            $table->foreign('status_id')->references('id')->on('constants')->onDelete('set NULL');
+            $table->foreign('status_id','countries_status_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
         });
     }
 
@@ -22,8 +22,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('_countries', function (Blueprint $table) {
-            //
+        Schema::table('countries', function (Blueprint $table) {
+            $table->dropForeign('countries_status_id_foreign');
+            $table->dropColumn('status_id');
         });
     }
 };

@@ -10,13 +10,14 @@ use Illuminate\Notifications\Notifiable;
 class Employee extends Model
 {
 	use Notifiable;
-	protected $fillable = [
-		'id','first_name','last_name','staff_id','email','contact_no','date_of_birth','gender','status_id','office_shift_id','salary_id','location_id','designation_id', 'company_id', 'department_id','is_active',
-		'role_users_id','permission_role_id','joining_date','exit_date','marital_status','address','city','state','country','zip_code','cv','skype_id','fb_id',
-		'twitter_id','linkedIn_id','blogger_id','basic_salary','payslip_type','leave_id','attendance_id','performance_id','award_id','transfer_id','resignation_id',
-		'travel_id','promotion_id','complain_id','warning_id','termination_id','attendance_type','total_leave','remaining_leave','pension_type','pension_amount',
-		'reporting_manager_id','allow_manual_attendance','religion_id','country_id','city_id','province_id','station_id','region_id','gl_class_id','sub_deparment_id',
-		'leaving_reason_id','status'];
+	// protected $fillable = [
+	// 	'id','first_name','last_name','staff_id','email','contact_no','date_of_birth','gender','status_id','office_shift_id','salary_id','location_id','designation_id', 'company_id', 'department_id','is_active',
+	// 	'role_users_id','permission_role_id','joining_date','exit_date','marital_status','address','city','state','country','zip_code','cv','skype_id','fb_id',
+	// 	'twitter_id','linkedIn_id','blogger_id','basic_salary','payslip_type','leave_id','attendance_id','performance_id','award_id','transfer_id','resignation_id',
+	// 	'travel_id','promotion_id','complain_id','warning_id','termination_id','attendance_type','total_leave','remaining_leave','pension_type','pension_amount',
+	// 	'report_to_employee_id','allow_manual_attendance','religion_id',
+	// 	];
+	protected $guarded = [];
 
 
 	public function getFullNameAttribute() {
@@ -97,9 +98,18 @@ class Employee extends Model
 	public function employeeLeaveTypeDetail(){
 		return $this->hasOne(EmployeeLeaveTypeDetail::class);
 	}
-
-
-
+	public function address(){
+		return $this->hasOne(Address::class);
+	}
+	public function office(){
+		return $this->hasOne(Office::class);
+	}
+	public function employeeGender(){
+		return $this->belongsTo(Constant::class,'gender_id','id');
+	}
+	public function employeeMaritalStatus(){
+		return $this->belongsTo(Constant::class,'marital_status_id','id');
+	}
 	public function setDateOfBirthAttribute($value)
 	{
 		$this->attributes['date_of_birth'] = Carbon::createFromFormat(env('Date_Format'), $value)->format('Y-m-d');

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('address2', 191)->nullable();
             $table->string('city', 191)->nullable();
             $table->string('state', 191)->nullable();
-            $table->unsignedBigInteger('country')->nullable();
+            $table->unsignedInteger('country')->nullable();
             $table->integer('zip')->nullable();
             $table->timestamps();
 
