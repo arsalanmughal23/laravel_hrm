@@ -128,9 +128,6 @@ use App\Http\Controllers\Variables\WarningTypeController;
 use App\Http\Controllers\WarningController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Addon\BiometricAddonController;
-use App\Http\Controllers\Addon\CRMController;
-use App\Http\Controllers\Addon\SaasController;
 use App\Http\Controllers\Variables\DeductionTypeController;
 use App\Http\Controllers\Variables\DepositCategoryController;
 use App\Http\Controllers\Variables\LoanTypeController;
@@ -138,43 +135,6 @@ use Illuminate\Support\Facades\File;
 
 
 Auth::routes(['register' => false]);
-
-Route::prefix('addons')->group(function () {
-
-    Route::get('/', function () {
-        return view('addons.index');
-    })->name('addons');
-
-    Route::controller(BiometricAddonController::class)->group(function () {
-        Route::prefix('biometric')->group(function () {
-            Route::get('install/step-1', 'biometricInstallStep1')->name('biometric-install-step-1');
-            Route::get('install/step-2', 'biometricInstallStep2')->name('biometric-install-step-2');
-            Route::get('install/step-3', 'biometricInstallStep3')->name('biometric-install-step-3');
-            Route::post('install/process', 'biometricInstallProcess')->name('biometric-install-process');
-            Route::get('install/step-4', 'biometricInstallStep4')->name('biometric-install-step-4');
-        });
-    });
-
-    Route::controller(SaasController::class)->group(function () {
-        Route::prefix('saas')->group(function () {
-            Route::get('install/step-1', 'saasInstallStep1')->name('saas-install-step-1');
-            Route::get('install/step-2', 'saasInstallStep2')->name('saas-install-step-2');
-            Route::get('install/step-3', 'saasInstallStep3')->name('saas-install-step-3');
-            Route::post('install/process', 'saasInstallProcess')->name('saas-install-process');
-            Route::get('install/step-4', 'saasInstallStep4')->name('saas-install-step-4');
-        });
-    });
-
-    Route::controller(CRMController::class)->group(function () {
-        Route::prefix('crm')->group(function () {
-            Route::get('install/step-1', 'crmInstallStep1')->name('crm-install-step-1');
-            Route::get('install/step-2', 'crmInstallStep2')->name('crm-install-step-2');
-            Route::get('install/step-3', 'crmInstallStep3')->name('crm-install-step-3');
-            Route::post('install/process', 'crmInstallProcess')->name('crm-install-process');
-            Route::get('install/step-4', 'crmInstallStep4')->name('crm-install-step-4');
-        });
-    });
-});
 
 $isCrmModuleExist = File::exists(base_path('Modules/CRM'));
 

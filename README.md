@@ -10,7 +10,7 @@
 
 #### <i>Released in WebDeveloper: 12 November 2020</i>
 
-HrmSolution HRM, Payroll & Project Management system is a comprehensive and cutting-edge software solution designed to streamline and optimize human resource management and project management processes within organizations. With its wide range of features and user-friendly interface, it empowers businesses to efficiently manage their workforce and projects, leading to increased productivity and improved overall performance. Manage multiple companies, departments, employees, projects and much more from an intuitive admin panel that you’ll love to use. No matter what is the size of your company, HrmSolution is capable of handling all your HR related tasks.
+PandaHcm HRM, Payroll & Project Management system is a comprehensive and cutting-edge software solution designed to streamline and optimize human resource management and project management processes within organizations. With its wide range of features and user-friendly interface, it empowers businesses to efficiently manage their workforce and projects, leading to increased productivity and improved overall performance. Manage multiple companies, departments, employees, projects and much more from an intuitive admin panel that you’ll love to use. No matter what is the size of your company, PandaHcm is capable of handling all your HR related tasks.
 
 
 ## Technologies
@@ -45,7 +45,7 @@ HrmSolution HRM, Payroll & Project Management system is a comprehensive and cutt
 
 
 ## My Role
-Developed, maintained and client support for the HrmSolution HRM Laravel app since the last two years, contributing to its ongoing success and functionality. The app is designed to streamline human resource management processes and enhance organizational efficiency.
+Developed, maintained and client support for the PandaHcm HRM Laravel app since the last two years, contributing to its ongoing success and functionality. The app is designed to streamline human resource management processes and enhance organizational efficiency.
 
 - Devloped IP Based Attendance System.
 - Modified Role and Permission

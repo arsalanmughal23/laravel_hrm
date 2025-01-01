@@ -12,21 +12,6 @@ use Illuminate\Support\Facades\Artisan;
 //     return File::get(public_path() . '/documentation/attendance_device_addon/index.php');
 // });
 
-Route::get('/phpinfo', function() {
-    return phpinfo();
-});
-
-Route::get('/documentation', function() {
-    return view('documentation.index');
-});
-
-Route::get('/documentation-attendance-device-addon', function() {
-    return view('documentation.attendance_device_addon.index');
-});
-
-Route::get('/documentation-crm', function() {
-    return view('documentation.crm.index');
-});
 
 Route::get('/optimize', function() {
     Artisan::call('optimize:clear');
