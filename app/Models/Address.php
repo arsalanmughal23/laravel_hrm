@@ -12,6 +12,7 @@ class Address extends Model
         'address' ,
         'employee_id' ,
         'user_id' ,
+        'country',
         'province_id' ,
         'city_id' ,
         'zip_code' ,
