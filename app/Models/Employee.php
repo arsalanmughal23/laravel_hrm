@@ -98,8 +98,8 @@ class Employee extends Model
 	public function employeeLeaveTypeDetail(){
 		return $this->hasOne(EmployeeLeaveTypeDetail::class);
 	}
-	public function address(){
-		return $this->hasOne(Address::class);
+	public function employeeAddress(){
+		return $this->hasOne(Address::class,'employee_id','id');
 	}
 	public function office(){
 		return $this->hasOne(Office::class);

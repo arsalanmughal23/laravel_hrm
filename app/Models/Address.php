@@ -12,12 +12,23 @@ class Address extends Model
         'address' ,
         'employee_id' ,
         'user_id' ,
+        'country',
         'province_id' ,
         'city_id' ,
         'zip_code' ,
         'family_code' ,
     ];
     public function employee(){
-        return $this->belongsTo(Employee::class);
+        return $this->belongsTo(Employee::class,'employee_id');
+    }
+    //
+    public function getCountry(){
+        return $this->belongsTo(Country::class,'country');
+    }
+    public function province(){
+        return $this->belongsTo(Province::class);
+    }
+    public function city(){
+        return $this->belongsTo(City::class);
     }
 }
