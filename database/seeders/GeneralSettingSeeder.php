@@ -14,7 +14,7 @@ class GeneralSettingSeeder extends Seeder
     {
         GeneralSetting::truncate();
 
-        $siteTitle = "HrmSolution";
+        $siteTitle = "PandaHcm";
         $timeZone = "Asia/Dhaka";
         $dateFormat = "d-m-Y";
 
@@ -27,7 +27,7 @@ class GeneralSettingSeeder extends Seeder
             'default_payment_bank' => 1,
             'date_format' => $dateFormat,
             'theme' => "default.css",
-            'footer' => "LionCoders",
+            'footer' => "PandaHcm",
             'footer_link' => "https://www.lion-coders.com",
         ]);
 
