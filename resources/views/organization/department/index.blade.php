@@ -28,6 +28,7 @@
                     <th>{{trans('file.Department')}}</th>
                     <th>{{__('Department Head')}}</th>
                     <th>{{trans('file.Company')}}</th>
+                    <th>{{trans('file.Parent Department')}}</th>
                     <th class="not-exported">{{trans('file.action')}}</th>
                 </tr>
                 </thead>
@@ -59,6 +60,19 @@
                                        class="form-control"
                                        placeholder="{{__('Unique Value',['key'=>trans('file.Department')])}}">
                             </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{__('Parent Department')}}</label>
+                                    <select name="parent_department_id" id="parent_department_id" class="selectpicker form-control"
+                                            data-live-search="true" data-live-search-style="contains"
+                                            title='{{__('Selecting',['key'=>trans('file.Department')])}}...'>
+                                            @foreach($departments as $department)
+                                            <option value="{{$department->id}}">{{$department->department_name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label>{{trans('file.Company')}}</label>
@@ -185,6 +199,10 @@
                     {
                         data: 'company',
                         name: 'company',
+                    },
+                    {
+                        data: 'parent_department_id',
+                        name: 'parent_department_id',
                     },
                     {
                         data: 'action',
@@ -353,6 +371,7 @@
 
                     $('#department_name').val(html.data.department_name);
                     $('#company_id').selectpicker('val', html.data.company_id);
+                    $('#parent_department_id').selectpicker('val', html.data.parent_department_id);
 
                     let all_employees = '';
                     $.each(html.employees, function (index, value) {
@@ -365,7 +384,7 @@
 
                     $('#hidden_id').val(html.data.id);
                     $('.modal-title').text('{{trans('file.Edit')}}');
-                    $('#action_button').val('{{trans('file.Edit')}}');
+                    $('#action_button').val('{{trans('file.Update')}}');
                     $('#action').val('{{trans('file.Edit')}}');
                     $('#formModal').modal('show');
                 }

@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('departments', function (Blueprint $table) {
-            $table->unsignedBigInteger('main_department_id')->nullable()->after('id');
-            $table->foreign('main_department_id','departments_main_department_id_foriegn')->references('id')->on('departments')->onDelete('cascade');
+            $table->unsignedBigInteger('parent_department_id')->nullable()->after('id');
+            $table->foreign('parent_department_id','departments_parent_department_id_foriegn')->references('id')->on('departments')->onDelete('cascade');
         });
     }
 
@@ -23,8 +23,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('departments', function (Blueprint $table) {
-            $table->dropForeign('departments_main_department_id_foriegn');
-            $table->dropColumn('main_department_id');
+            $table->dropForeign('departments_parent_department_id_foriegn');
+            $table->dropColumn('parent_department_id');
         });
     }
 };

@@ -239,6 +239,7 @@ return array (
     ),
   ),
   'Department' => 'Department',
+  'Parent Department' => 'Parent Department',
   'Dependent' => 'Dependent',
   'Deposit' => 'Deposit',
   'Description' => 'Description',

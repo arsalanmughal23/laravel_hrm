@@ -14,6 +14,10 @@ class DepartmentController extends Controller {
 	public function index()
 	{
 		$companies = company::select('id', 'company_name')->get();
+		// $departments = department::select('id', 'department_name')->get();
+		$departments = department::whereNull('parent_department_id')->select('id', 'department_name')->get();
+
+
 
 		if (request()->ajax())
 		{
@@ -29,6 +33,10 @@ class DepartmentController extends Controller {
 				->addColumn('department_head', function ($row)
 				{
 					return $row->DepartmentHead->full_name ?? '';
+				})
+				->addColumn('parent_department_id', function ($row) {
+					return $row->parentDepartment?->department_name ?? '';
+						// ->map(fn($name) => ucfirst($name));
 				})
 				->addColumn('action', function ($data)
 				{
@@ -50,7 +58,7 @@ class DepartmentController extends Controller {
 				->make(true);
 		}
 
-		return view('organization.department.index', compact('companies'));
+		return view('organization.department.index', compact('companies','departments'));
 	}
 
 	/**
@@ -61,6 +69,7 @@ class DepartmentController extends Controller {
 	 */
 	public function store(Request $request)
 	{
+		// dd($request->all());
 		$logged_user = auth()->user();
 
 		if ($logged_user->can('store-department'))
@@ -83,8 +92,11 @@ class DepartmentController extends Controller {
 
 			$data['department_name'] = str_replace('&amp;', '&', $request->department_name);
 			$data['company_id'] = $request->company_id;
-			if($request->employee_id){
+			if($request->employee_id ){
 				$data ['department_head'] = $request->employee_id;
+			}
+			if($request->parent_department_id ){
+				$data ['parent_department_id'] = $request->parent_department_id;
 			}
 
 

@@ -10,7 +10,7 @@ class department extends Model
     use HasFactory;
 
 	protected $fillable = [
-		'department_name', 'company_id','department_head','is_active','main_department_id'
+		'department_name', 'company_id','department_head','is_active','parent_department_id','employee_id'
 	];
 
 	public function company(){
@@ -25,14 +25,14 @@ class department extends Model
     public function employees(){
 		return $this->hasMany(Employee::class,'company_id')->orderBy("id", "ASC");
 	}
-	public function mainDepartment()
+	public function parentDepartment()
 	{
-		return $this->belongsTo(Department::class, 'main_department_id');
+		return $this->belongsTo(Department::class, 'parent_department_id');
 	}
 	
 	public function subDepartments()
 	{
-		return $this->hasMany(Department::class, 'main_department_id');
+		return $this->hasMany(Department::class, 'parent_department_id');
 	}
 	
 
