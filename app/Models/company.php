@@ -23,4 +23,8 @@ class company extends Model
 	public function companyType(){
 		return $this->belongsTo(CompanyType::class,'company_type_id');
 	}
+
+	public function scopeActive(){
+		return $this->where('is_active', true);
+	}
 }

@@ -111,7 +111,7 @@ class EmployeeController extends Controller
     {
         $logged_user = auth()->user();
         if ($logged_user->can('view-details-employee')) {
-            $companies = company::select('id', 'company_name')->get();
+            $companies = company::select('id', 'company_name')->active()->get();
             $roles = Role::where('id', '!=', 3)->where('is_active', 1)->select('id', 'name')->get();
             $currentDate = date('Y-m-d');
 
