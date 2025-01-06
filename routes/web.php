@@ -65,6 +65,7 @@ use App\Http\Controllers\LanguageSettingController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\OfficeShiftController;
 use App\Http\Controllers\OfficialDocumentController;
 use App\Http\Controllers\PayrollController;
@@ -131,6 +132,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Variables\DeductionTypeController;
 use App\Http\Controllers\Variables\DepositCategoryController;
 use App\Http\Controllers\Variables\LoanTypeController;
+use App\Models\Constant;
 use Illuminate\Support\Facades\File;
 
 
@@ -260,6 +262,12 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
         Route::post('qualifications/update', [EmployeeQualificationController::class, 'update'])->name('qualifications.update');
         Route::post('qualifications/{employee}/store', [EmployeeQualificationController::class, 'store'])->name('qualifications.store');
         Route::get('qualifications/{id}/delete', [EmployeeQualificationController::class, 'destroy'])->name('qualifications.destroy');
+
+        Route::get('office',[OfficeController::class,'index'])->name('office.index');
+        Route::get('office/{id}/edit',[OfficeController::class,'edit'])->name('office.edit');
+        Route::get('office/{employee}',[OfficeController::class,'show'])->name('office.show');
+        Route::post('office/update',[OfficeController::class,'update'])->name('office.update');
+        Route::post('office/{employee}/store',[OfficeController::class,'store'])->name('office.store');
 
         Route::get('work_experience', [EmployeeWorkExperienceController::class, 'index'])->name('work_experience.index');
         Route::get('work_experience/{id}/edit', [EmployeeWorkExperienceController::class, 'edit'])->name('work_experience.edit');
@@ -972,4 +980,11 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
     Route::get('/new-release', [DashboardController::class, 'newVersionReleasePage'])->name('new-release');
     Route::post('version-upgrade', [DashboardController::class, 'versionUpgrade'])->name('version-upgrade');
 });
-
+Route::get('test', function(){
+    $cost_centers = Constant::where('group','employee')->where('key','cost_center')->get();
+            $leaving_reasons = Constant::where('group','employee')->where('key','leaving_reason')->get();
+            $employee_status = Constant::where('group','employee')->where('key','emp_status')->get();
+            $all_status = Constant::where('group','employee')->where('key','status')->get();
+            $gl_classes = Constant::where('group','employee')->where('key','gl_class')->get();
+    dd ($cost_centers,$leaving_reasons,$employee_status,$all_status,$gl_classes);
+});

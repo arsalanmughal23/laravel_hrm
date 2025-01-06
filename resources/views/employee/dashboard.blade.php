@@ -107,6 +107,12 @@
                                                aria-selected="false">{{trans('file.Qualification')}}</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" href="{{-- route('office.show',$employee) --}}"
+                                               id="office-tab" data-toggle="tab" data-table="office"
+                                               data-target="#Office" role="tab" aria-controls="Office"
+                                               aria-selected="false">{{trans('file.Office Details')}}</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link" href="{{route('work_experience.show',$employee)}}"
                                                id="work_experience-tab" data-toggle="tab" data-table="work_experience"
                                                data-target="#Work_experience" role="tab" aria-controls="Work_experience"
@@ -450,6 +456,12 @@
                                             {{__('All Qualifications')}}
                                             <hr>
                                             @include('employee.qualifications.index')
+                                        </div>
+                                        <div class="tab-pane fade" id="Office" role="tabpanel"
+                                             aria-labelledby="office-tab">
+                                            {{__('Office Details')}}
+                                            <hr>
+                                            @include('employee.office.index')
                                         </div>
                                         <div class="tab-pane fade" id="Work_experience" role="tabpanel"
                                              aria-labelledby="work_experience-tab">

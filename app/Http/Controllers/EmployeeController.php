@@ -10,12 +10,17 @@ use App\Models\DocumentType;
 use App\Models\Employee;
 use App\Http\traits\LeaveTypeDataManageTrait;
 use App\Imports\UsersImport;
+use App\Models\City;
+use App\Models\Constant;
 use App\Models\LoanType;
 use App\Models\office_shift;
+use App\Models\Province;
 use App\Models\QualificationEducationLevel;
 use App\Models\QualificationLanguage;
 use App\Models\QualificationSkill;
+use App\Models\Region;
 use App\Models\RelationType;
+use App\Models\Station;
 use App\Models\status;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -111,7 +116,8 @@ class EmployeeController extends Controller
     {
         $logged_user = auth()->user();
         if ($logged_user->can('view-details-employee')) {
-            $companies = company::select('id', 'company_name')->get();
+            // $companies = company::select('id', 'company_name')->get();
+            $companies = company::select('id', 'company_name')->active()->get();
             $roles = Role::where('id', '!=', 3)->where('is_active', 1)->select('id', 'name')->get();
             $currentDate = date('Y-m-d');
 
@@ -303,7 +309,7 @@ class EmployeeController extends Controller
     public function show(Employee $employee)
     {
         if (auth()->user()->can('view-details-employee')) {
-            $companies = Company::select('id', 'company_name')->get();
+            $companies = Company::select('id', 'company_name')->active()->get();
             $departments = department::select('id', 'department_name')
                 ->where('company_id', $employee->company_id)
                 ->get();
@@ -319,6 +325,10 @@ class EmployeeController extends Controller
             $statuses = status::select('id', 'status_title')->get();
             // $roles = Role::select('id', 'name')->get();
             $countries = DB::table('countries')->select('id', 'name')->get();
+            // $cities = DB::table('cities')->select('id', 'name')->get();
+            $cities = DB::table('cities')->select('id', 'name')->limit(100)->get();
+            $provinces = DB::table('provinces')->select('id', 'name')->limit(100)->get();
+            // $provinces = DB::table('provinces')->select('id', 'name')->get();
             $document_types = DocumentType::select('id', 'document_type')->get();
 
             $education_levels = QualificationEducationLevel::select('id', 'name')->get();
@@ -328,15 +338,36 @@ class EmployeeController extends Controller
             $loanTypes = LoanType::select('id','type_name')->get();
             $deductionTypes = DeductionType::select('id','type_name')->get();
             $roles = Role::where('id', '!=', 3)->where('is_active', 1)->select('id', 'name')->get();
+            $all_departments = department::select('id', 'department_name')->get();
+            $all_designations = designation::select('id', 'designation_name')->get();
+            $stations = Station::select('id', 'name')->get();
+            $regions = Region::select('id', 'name')->get();
+            $cost_centers = Constant::where('group','employee')->where('key','cost_center')->get();
+            $leaving_reasons = Constant::where('group','employee')->where('key','leaving_reason')->get();
+            $employee_status = Constant::where('group','employee')->where('key','emp_status')->get();
+            $all_status = Constant::where('group','employee')->where('key','status')->get();
+            $gl_classes = Constant::where('group','employee')->where('key','gl_class')->get();
 
-            return view('employee.dashboard', compact('employee', 'countries', 'companies',
-                'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
+            return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies', 'all_departments', 'all_designations',
+                'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_status','all_status','gl_classes' ,'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
                 'education_levels', 'language_skills', 'general_skills', 'roles','relationTypes','loanTypes','deductionTypes'));
         } else {
             return response()->json(['success' => __('You are not authorized')]);
         }
     }
+    public function getProvinces(Request $request)
+    {
+        $data['provinces'] = Province::where('country', $request->id)->select('id', 'name')->get();
+        return response()->json($data);
+    }
 
+
+    public function getCities(Request $request)
+    {
+        $data['cities'] = City::where('province_id', $request->id)->select('id', 'name')->get();
+        return response()->json($data);
+    }
+    
     public function destroy($id)
     {
         if (! env('USER_VERIFIED')) {
