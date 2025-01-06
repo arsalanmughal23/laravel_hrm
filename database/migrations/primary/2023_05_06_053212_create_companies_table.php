@@ -25,7 +25,7 @@ return new class extends Migration
             $table->string('tax_no', 191)->nullable();
             $table->unsignedBigInteger('location_id')->nullable();
             $table->string('company_logo', 191)->nullable();
-            $table->boolean('is_active')->nullable();
+            $table->boolean('is_active')->default(false);
             $table->timestamps();
 
             $table->foreign('location_id', 'companies_location_id_foreign')->references('id')->on('locations')->onDelete('set NULL');
