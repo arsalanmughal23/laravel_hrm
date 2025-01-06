@@ -8,16 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class Address extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'address' ,
-        'employee_id' ,
-        'user_id' ,
-        'country',
-        'province_id' ,
-        'city_id' ,
-        'zip_code' ,
-        'family_code' ,
-    ];
+   
+    protected $guarded = [];
     public function employee(){
         return $this->belongsTo(Employee::class,'employee_id');
     }

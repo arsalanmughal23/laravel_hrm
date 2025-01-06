@@ -13,15 +13,18 @@ class Province extends Model
         'country_id',
         'status_id'
 
-     ];
-    public function country(){
+    ];
+    public function country()
+    {
         return $this->belongsTo(Country::class);
     }
-    
-    public function cities(){
+
+    public function cities()
+    {
         return $this->hasMany(City::class);
     }
-    public function status(){
-        return $this->belongsTo(Constant::class,'status_id');
+    public function status()
+    {
+        return $this->belongsTo(Constant::class, 'status_id');
     }
 }

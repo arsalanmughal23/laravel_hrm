@@ -27,6 +27,8 @@ class DatabaseSeeder extends Seeder
             CitySeeder::class,
             StationSeeder::class,
             ReligionSeeder::class,
+            StationSeeder::class,
+            RegionSeeder::class
             // DesignationSeeder::class,
             
         ]);
