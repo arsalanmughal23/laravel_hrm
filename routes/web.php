@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\AccountListController;
+use App\Http\Controllers\Address;
+use App\Http\Controllers\AddressController;
 use App\Http\Controllers\AllUserController;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\EmployeeSocialProfileController;
@@ -204,7 +206,7 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
     Route::post('/mass_assign', [AssignRoleController::class, 'mass_update'])->name('mass_assign_role');
 
     Route::prefix('staff')->group(function () {
-
+        
         Route::prefix('employees')->group(function () {
             Route::resource('/', EmployeeController::class)->names([
                 'index' => 'employees.index',
@@ -220,6 +222,7 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
             Route::get('pdf/{id}', [EmployeeController::class, 'employeePDF'])->name('employees.pdf');
             Route::post('{employee}/pension_update', [EmployeeController::class, 'employeesPensionUpdate'])->name('employees.pension_update');
             Route::post('{employee}/infoUpdate', [EmployeeController::class, 'infoUpdate'])->name('employees_basicInfo.update');
+           
         });
 
         Route::prefix('immigrations')->group(function () {
@@ -232,6 +235,8 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
             Route::get('document/download/{id}', [EmployeeImmigrationController::class, 'download'])->name('immigrations_document.download');
         });
         // End
+        // staff/contacts/update
+        
 
         Route::get('contacts', [EmployeeContactController::class, 'index'])->name('contacts.index');
         Route::get('contacts/{id}/edit', [EmployeeContactController::class, 'edit'])->name('contacts.edit');
@@ -260,6 +265,16 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
         Route::post('qualifications/update', [EmployeeQualificationController::class, 'update'])->name('qualifications.update');
         Route::post('qualifications/{employee}/store', [EmployeeQualificationController::class, 'store'])->name('qualifications.store');
         Route::get('qualifications/{id}/delete', [EmployeeQualificationController::class, 'destroy'])->name('qualifications.destroy');
+       
+        Route::get('addresses', [AddressController::class, 'index'])->name('addresses.index');
+        Route::get('addresses/{id}/edit', [AddressController::class, 'edit'])->name('addresses.edit');
+        Route::get('addresses/{employee}', [AddressController::class, 'show'])->name('addresses.show');
+        Route::post('addresses/update', [AddressController::class, 'update'])->name('addresses.update');
+        Route::post('addresses/{employee}/store', [AddressController::class, 'store'])->name('addresses.store');
+        Route::get('addresses/{id}/delete', [AddressController::class, 'destroy'])->name('addresses.destroy');
+
+        Route::post('provinces', [EmployeeController::class, 'getProvinces'])->name('get.province');
+        Route::post('cities', [EmployeeController::class, 'getCities'])->name('get.cities');
 
         Route::get('work_experience', [EmployeeWorkExperienceController::class, 'index'])->name('work_experience.index');
         Route::get('work_experience/{id}/edit', [EmployeeWorkExperienceController::class, 'edit'])->name('work_experience.edit');
@@ -972,4 +987,5 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
     Route::get('/new-release', [DashboardController::class, 'newVersionReleasePage'])->name('new-release');
     Route::post('version-upgrade', [DashboardController::class, 'versionUpgrade'])->name('version-upgrade');
 });
+
 

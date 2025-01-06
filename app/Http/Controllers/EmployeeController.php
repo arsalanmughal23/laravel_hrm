@@ -10,8 +10,10 @@ use App\Models\DocumentType;
 use App\Models\Employee;
 use App\Http\traits\LeaveTypeDataManageTrait;
 use App\Imports\UsersImport;
+use App\Models\City;
 use App\Models\LoanType;
 use App\Models\office_shift;
+use App\Models\Province;
 use App\Models\QualificationEducationLevel;
 use App\Models\QualificationLanguage;
 use App\Models\QualificationSkill;
@@ -319,6 +321,8 @@ class EmployeeController extends Controller
             $statuses = status::select('id', 'status_title')->get();
             // $roles = Role::select('id', 'name')->get();
             $countries = DB::table('countries')->select('id', 'name')->get();
+            $cities = City::select('id', 'name')->get();
+            $provinces = Province::select('id', 'name')->get();
             $document_types = DocumentType::select('id', 'document_type')->get();
 
             $education_levels = QualificationEducationLevel::select('id', 'name')->get();
@@ -329,14 +333,26 @@ class EmployeeController extends Controller
             $deductionTypes = DeductionType::select('id','type_name')->get();
             $roles = Role::where('id', '!=', 3)->where('is_active', 1)->select('id', 'name')->get();
 
-            return view('employee.dashboard', compact('employee', 'countries', 'companies',
+            return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies',
                 'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
                 'education_levels', 'language_skills', 'general_skills', 'roles','relationTypes','loanTypes','deductionTypes'));
         } else {
             return response()->json(['success' => __('You are not authorized')]);
         }
     }
+    public function getProvinces(Request $request)
+    {
+        $data['provinces'] = Province::where('country', $request->id)->select('id', 'name')->get();
+        return response()->json($data);
+    }
 
+
+    public function getCities(Request $request)
+    {
+        $data['cities'] = City::where('province_id', $request->id)->select('id', 'name')->get();
+        return response()->json($data);
+    }
+    
     public function destroy($id)
     {
         if (! env('USER_VERIFIED')) {

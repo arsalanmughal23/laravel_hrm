@@ -21,7 +21,7 @@ return new class extends Migration
             $table->foreign('station_id', 'offices_station_id_foreign')->references('id')->on('stations')->onDelete('set NULL');
             $table->unsignedBigInteger('department_id')->nullable();
             $table->foreign('department_id', 'offices_department_id_foreign')->references('id')->on('departments')->onDelete('set NULL');
-            $table->unsignedBigInteger('sub_department_id')->nullable();
+            $table->unsignedBigInteger('designation_id')->nullable();
             $table->foreign('designation_id', 'offices_designation_id_foreign')->references('id')->on('designations')->onDelete('set NULL');
             $table->unsignedBigInteger('status_id')->nullable(); // employee status : Active , Inactive
             $table->foreign('status_id')->references('id')->on('constants')->onDelete('set NULL');
