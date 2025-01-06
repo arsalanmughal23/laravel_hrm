@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('addresses', function (Blueprint $table) {
             $table->id();
             $table->text('address');
-            $table->unsignedBigInteger('employee_id');
+            $table->unsignedBigInteger('employee_id')->nullable();
             $table->foreign('employee_id', 'addresses_employee_id_foreign')->references('id')->on('employees')->onDelete('cascade');
-            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id', 'addresses_user_id_foreign')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedInteger('country')->nullable();
             $table->foreign('country', 'addresses_country_foreign')->references('id')->on('countries')->onDelete('set NULL');

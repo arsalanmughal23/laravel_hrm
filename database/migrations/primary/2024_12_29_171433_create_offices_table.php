@@ -22,8 +22,6 @@ return new class extends Migration
             $table->unsignedBigInteger('department_id')->nullable();
             $table->foreign('department_id', 'offices_department_id_foreign')->references('id')->on('departments')->onDelete('set NULL');
             $table->unsignedBigInteger('sub_department_id')->nullable();
-            $table->foreign('sub_department_id','offices_sub_department_id_foreign')->references('id')->on('departments')->onDelete('set NULL');
-            $table->unsignedBigInteger('designation_id')->nullable();
             $table->foreign('designation_id', 'offices_designation_id_foreign')->references('id')->on('designations')->onDelete('set NULL');
             $table->unsignedBigInteger('status_id')->nullable(); // employee status : Active , Inactive
             $table->foreign('status_id')->references('id')->on('constants')->onDelete('set NULL');
@@ -59,7 +57,6 @@ return new class extends Migration
         $table->dropForeign('offices_employee_id_foreign');
         $table->dropForeign('offices_station_id_foreign');
         $table->dropForeign('offices_department_id_foreign');
-        $table->dropForeign('offices_sub_department_id_foreign');
         $table->dropForeign('offices_designation_id_foreign');
         $table->dropForeign('offices_region_id_foreign');
         $table->dropForeign('offices_cost_center_id_foreign');
