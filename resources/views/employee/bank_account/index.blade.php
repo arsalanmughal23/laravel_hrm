@@ -18,8 +18,12 @@
                 <th>{{__('Account Title')}}</th>
                 <th>{{__('Account Number')}}</th>
                 <th>{{__('Bank Name')}}</th>
-                <th>{{__('Bank Code')}}</th>
+                <th>{{__('Account Type')}}</th>
                 <th>{{__('Bank Branch')}}</th>
+                <th>{{__('Branch Code')}}</th>
+                <th>{{__('Swift Code')}}</th>
+                <th>{{__('Short Name')}}</th>
+                <th>{{__('Address')}}</th>
                 <th class="not-exported">{{trans('file.action')}}</th>
             </tr>
             </thead>
@@ -62,10 +66,20 @@
                                 <input type="text" name="bank_name" id="bank_bank_name" required autocomplete="off"
                                        class="form-control" placeholder={{__('Bank Name')}} >
                             </div>
-
                             <div class="col-md-6 form-group">
-                                <label>{{__('Bank Code')}} *</label>
-                                <input type="text" name="bank_code" id="bank_bank_code" placeholder={{__('Bank Code')}}
+                                <label>{{__('Account Type')}} *</label>
+                                    <select name="account_type_id" id="bank_account_type_id" required
+                                            class="form-control selectpicker"
+                                            data-live-search="true" data-live-search-style="contains"
+                                            title="{{ __('Select Account Type') }}...">
+                                        @foreach($bank_account_types as $bank_account_type)
+                                            <option value="{{ $bank_account_type->id }}">{{ $bank_account_type->text }}</option>
+                                        @endforeach
+                                    </select>
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>{{__('Branch Code')}} *</label>
+                                <input type="text" name="branch_code" id="bank_branch_code" placeholder={{__('Branch Code')}}
                                         required class="form-control">
                             </div>
 
@@ -73,6 +87,26 @@
                                 <label>{{__('Bank Branch')}} *</label>
                                 <input type="text" name="bank_branch" id="bank_bank_branch"
                                        placeholder={{__('Bank Code')}}
+                                               required class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>{{__('Swift Code')}} *</label>
+                                <input type="text" name="swift_code" id="bank_swift_code"
+                                       placeholder={{__('Bank Swift Code')}}
+                                               required class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label>{{__('Short Name')}} *</label>
+                                <input type="text" name="short_name" id="bank_short_name"
+                                       placeholder={{__('Short Name')}}
+                                                class="form-control">
+                            </div>
+
+                       
+                            <div class="col-md-12 form-group">
+                                <label>{{__('Address')}} *</label>
+                                <input type="text" name="address" id="bank_address"
+                                       placeholder={{__('Address')}}
                                                required class="form-control">
                             </div>
 

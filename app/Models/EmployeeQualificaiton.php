@@ -9,6 +9,11 @@ class EmployeeQualificaiton extends Model
 {
 	protected $guarded=[];
 
+	protected $casts = [
+		'from_year' => 'date',
+		'to_year' => 'date'
+	];
+
 	public function employee(){
 		return $this->hasOne('App\Models\Employee','id','employee_id');
 	}

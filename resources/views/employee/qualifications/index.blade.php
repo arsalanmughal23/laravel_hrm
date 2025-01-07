@@ -18,6 +18,7 @@
                 <th>{{trans('file.School/University')}}</th>
                 <th>{{__('Time Period')}}</th>
                 <th>{{__('Education Level')}}</th>
+                <th>{{__('Result')}}</th>
                 <th class="not-exported">{{trans('file.action')}}</th>
             </tr>
             </thead>
@@ -73,7 +74,11 @@
                                 <input type="text" name="to_date" id="qualification_to_date" required autocomplete="off"
                                        class="form-control date" value="">
                             </div>
-
+                            <div class="col-md-6 form-group">
+                                <label>{{trans('file.Result')}} *</label>
+                                <input type="text" name="result" id="result" required autocomplete="off"
+                                       class="form-control" value="">
+                            </div>
                             <div class="col-md-6 form-group">
                                 <label>{{trans('file.Language')}}</label>
                                 <select name="language_skill_id" id="language_skill_id" required
@@ -99,7 +104,7 @@
                             </div>
 
 
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-group">
                                     <label>{{trans('file.Description')}}</label>
                                     <textarea class="form-control" name="description" id="qualification_description"

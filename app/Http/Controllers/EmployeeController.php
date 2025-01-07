@@ -367,9 +367,13 @@ class EmployeeController extends Controller
             $gl_classes = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
                                         ->where('key',ConstantEnum::KEY_GL_CLASS)
                                         ->get();
+            $bank_account_types = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
+                                        ->where('key',ConstantEnum::KEY_ACCOUNT_TYPE)
+                                        ->active()
+                                        ->get();
 
             return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies', 'all_departments', 'all_designations',
-                'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_status','all_status','gl_classes' ,'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
+                'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_status','all_status','gl_classes','bank_account_types' ,'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
                 'education_levels', 'language_skills', 'general_skills', 'roles','relationTypes','loanTypes','deductionTypes'));
         } else {
             return response()->json(['success' => __('You are not authorized')]);

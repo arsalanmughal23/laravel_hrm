@@ -49,11 +49,12 @@ class EmployeeQualificationController extends Controller
 
 	public function store(Request $request,$employee)
 	{
+		// dd($request);
 		$logged_user = auth()->user();
 		if ($logged_user->can('store-details-employee')||$logged_user->id==$employee)
 		{
 			$validator = Validator::make($request->only( 'institution_name','education_level_id','from_date','to_date',
-				'description','language_skill_id','general_skill_id'),
+				'description','language_skill_id','general_skill_id','result'),
 				[
 					'institution_name' => 'required',
 					'education_level_id' => 'required',
@@ -86,9 +87,11 @@ class EmployeeQualificationController extends Controller
 			$data ['from_year'] = $request->from_date;
 			$data ['to_year'] = $request->to_date;
 			$data ['description'] = $request->description;
+			$data ['result'] = $request->result;
+			// dd($data);
 
-			EmployeeQualificaiton::create($data);
-
+			$modified_data = EmployeeQualificaiton::create($data);
+			// dd($modified_data);
 			return response()->json(['success' => __('Data Added successfully.')]);
 		}
 
