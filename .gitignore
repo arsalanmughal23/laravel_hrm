@@ -38,5 +38,6 @@ yarn-error.log
 /.vscode
 
 vendorSAAS.zip
+*.zip
 # git rm -r --cached database/migrations
 
