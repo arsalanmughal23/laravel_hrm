@@ -8,6 +8,17 @@ use Illuminate\Database\Eloquent\Model;
 class Office extends Model
 {
     use HasFactory;
+    protected $guarded = [];
+
+    protected $casts = [
+        'joining_date' => 'date', 
+        'confirmation_date' => 'date', 
+        'contract_start_date' => 'date', 
+        'contract_end_date' => 'date', 
+        'resign_date' => 'date', 
+        'leaving_date' => 'date', 
+    ];
+
     public function employee(){
         return $this->belongsTo(Employee::class);
     }

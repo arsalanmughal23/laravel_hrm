@@ -67,6 +67,7 @@ use App\Http\Controllers\LanguageSettingController;
 use App\Http\Controllers\LeaveController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MeetingController;
+use App\Http\Controllers\OfficeController;
 use App\Http\Controllers\OfficeShiftController;
 use App\Http\Controllers\OfficialDocumentController;
 use App\Http\Controllers\PayrollController;
@@ -133,6 +134,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Variables\DeductionTypeController;
 use App\Http\Controllers\Variables\DepositCategoryController;
 use App\Http\Controllers\Variables\LoanTypeController;
+use App\Models\Constant;
 use Illuminate\Support\Facades\File;
 
 
@@ -275,6 +277,12 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
 
         Route::post('provinces', [EmployeeController::class, 'getProvinces'])->name('get.province');
         Route::post('cities', [EmployeeController::class, 'getCities'])->name('get.cities');
+
+        Route::get('office',[OfficeController::class,'index'])->name('office.index');
+        Route::get('office/{id}/edit',[OfficeController::class,'edit'])->name('office.edit');
+        Route::get('office/{employee}',[OfficeController::class,'show'])->name('office.show');
+        Route::post('office/update',[OfficeController::class,'update'])->name('office.update');
+        Route::post('office/{employee}/store',[OfficeController::class,'store'])->name('office.store');
 
         Route::get('work_experience', [EmployeeWorkExperienceController::class, 'index'])->name('work_experience.index');
         Route::get('work_experience/{id}/edit', [EmployeeWorkExperienceController::class, 'edit'])->name('work_experience.edit');

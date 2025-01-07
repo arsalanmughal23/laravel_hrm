@@ -13,7 +13,7 @@ class RegionSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('regions')->truncate();
+        DB::table('regions')->delete();
         $regions = array(
             array('name' => 'North Karachi', 'city_id' => 2729, 'created_at' => now(), 'updated_at' => now()),
             array('name' => 'Gulshan-e-Iqbal', 'city_id' => 2729, 'created_at' => now(), 'updated_at' => now()),

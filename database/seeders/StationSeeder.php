@@ -21,5 +21,6 @@ class StationSeeder extends Seeder
             array('id' => 3, 'name' => 'Warehouse'),
             array('id' => 4, 'name' => 'Branch'),
         );
+        DB::table('stations')->insert($stations);
     }
 }
