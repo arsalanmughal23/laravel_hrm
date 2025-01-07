@@ -1,30 +1,42 @@
-/vendor/
-node_modules/
-npm-debug.log
-yarn-error.log
+!/database/migrations/factories
+!/database/migrations/seeders
+!/database/migrations/note.txt
+/.phpunit.cache
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
 
-# Laravel 5 & Lumen specific
-public/storage
-public/hot
+/public/docs
+/public/icons-reference
+/public/install
+/public/install-assets
+/public/sample_file
+/public/ts
+# /public/uploads
+# /public/vendor
+/public/install0.zip
+/public/samsung.png
 
-# Laravel 5 & Lumen specific with changed public path
-public_html/storage
-public_html/hot
 
-storage/*.key
-.env
-Homestead.yaml
-Homestead.json
-/.vagrant
-.phpunit.result.cache
+/track
 
+/node_modules
 /public/build
-/storage/pail
+/public/hot
+/public/storage
+/storage
+/vendor
+.env
 .env.backup
 .env.production
-.phpactor.json
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
 auth.json
+npm-debug.log
+yarn-error.log
+/.fleet
+/.idea
+/.vscode
+
+vendorSAAS.zip
+# git rm -r --cached database/migrations
+
