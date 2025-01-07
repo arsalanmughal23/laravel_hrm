@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
             // UserSeeder::class,
             ProvinceSeeder::class,
             CitySeeder::class,
-            StationSeeder::class,
             ReligionSeeder::class,
             StationSeeder::class,
             RegionSeeder::class
