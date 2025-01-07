@@ -429,6 +429,8 @@ return array (
   'Remarks' => 'Remarks',
   'Resignation' => 'Resignation',
   'Resignations' => 'Resignations',
+  'Result' => 'Result',
+  'Region' => 'Region',
   'Role' => 'Role',
   'Salary' => 'Salary',
   'Saturday' => 'Saturday',

@@ -11,4 +11,7 @@ class EmployeeBankAccount extends Model
 	public function employee(){
 		return $this->hasOne('App\Models\Employee','id','employee_id');
 	}
+	public function accountType(){
+		return $this->belongsTo(Constant::class,'account_type_id');
+	}
 }

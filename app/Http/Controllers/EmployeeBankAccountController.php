@@ -23,7 +23,12 @@ class EmployeeBankAccountController extends Controller
 					{
 						return $bank_account->id;
 					})
+					->addColumn('accountType',function ($row)
+                    {
+                        return $row->accountType?->text;
+                    })
 					->addColumn('action', function ($data) use ($logged_user,$employee_id)
+					
 					{
 						if ($logged_user->can('modify-details-employee')||$logged_user->id==$employee_id)
 						{
@@ -50,13 +55,14 @@ class EmployeeBankAccountController extends Controller
 		if ($logged_user->can('store-details-employee')||$logged_user->id==$employee)
 		{
 			$validator = Validator::make($request->only( 'account_title','account_number','bank_name',
-				'bank_code','bank_branch'),
+				'branch_code','bank_branch','swift_code','short_name','account_type_id','address'),
 				[
 					'account_title' => 'required',
 					'bank_branch' => 'required',
 					'account_number' =>'required',
 					'bank_name' =>'required',
-					'bank_code' =>'required'
+					'branch_code' =>'required',
+					'account_type_id' =>'required',
 				]
 //				,
 //				[
@@ -64,7 +70,7 @@ class EmployeeBankAccountController extends Controller
 //					'account_number.required' => 'Account Number can not be empty',
 //					'bank_name.required' => 'Bank Name can not be empty',
 //					'bank_branch.required' => 'Bank Branch can not be empty',
-//					'bank_code.required' => 'Bank Code can not be empty',
+//					'branch_code.required' => 'Bank Code can not be empty',
 //				]
 			);
 
@@ -82,7 +88,11 @@ class EmployeeBankAccountController extends Controller
 			$data['bank_branch'] = $request->bank_branch;
 			$data ['account_number'] = $request->account_number;
 			$data ['bank_name'] = $request->bank_name;
-			$data ['bank_code'] = $request->bank_code;
+			$data ['branch_code'] = $request->branch_code;
+			$data ['swift_code'] = $request->swift_code;
+			$data ['address'] = $request->address;
+			$data ['short_name'] = $request->short_name;
+			$data ['account_type_id'] = $request->account_type_id;
 
 			EmployeeBankAccount::create($data);
 
@@ -111,13 +121,14 @@ class EmployeeBankAccountController extends Controller
 		{
 
 			$validator = Validator::make($request->only( 'account_title','account_number','bank_name',
-				'bank_code','bank_branch'),
+				'branch_code','bank_branch','short_name','account_type_id','address','swift_code'),
 				[
 					'account_title' => 'required',
 					'bank_branch' => 'required',
 					'account_number' =>'required',
 					'bank_name' =>'required',
-					'bank_code' =>'required',
+					'branch_code' =>'required',
+					'account_type_id' =>'required',
 				]
 //				,
 //				[
@@ -138,11 +149,17 @@ class EmployeeBankAccountController extends Controller
 
 			$data = [];
 
-			$data['account_title'] =  $request->account_title;
-			$data['bank_branch'] = $request->bank_branch;
-			$data ['account_number'] = $request->account_number;
-			$data ['bank_name'] = $request->bank_name;
-			$data ['bank_code'] = $request->bank_code;
+			// $data['account_title'] =  $request->account_title;
+			// $data['bank_branch'] = $request->bank_branch;
+			// $data ['account_number'] = $request->account_number;
+			// $data ['bank_name'] = $request->bank_name;
+			// $data ['branch_code'] = $request->branch_code;
+			// $data ['swift_code'] = $request->swift_code;
+			// $data ['short_name'] = $request->short_name;
+			// $data ['address'] = $request->address;
+			$data ['account_type_id'] = $request->account_type_id;
+			$data = $request->only('account_title','bank_branch','account_number','bank_name',
+				'branch_code','short_name','account_type_id','address','swift_code');
 
 			EmployeeBankAccount::whereId($id)->update($data);
 
