@@ -14,31 +14,12 @@ trait AutoUpdateTrait{
 
     public function isUpdateAvailable()
     {
-        $versionUpgradeData = [];
-        $versionUpgradeData['alert_version_upgrade_enable'] = false;
-
-        $ch = curl_init('https://peopleprohrm.com/demo/api/is-update-available');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        $response = curl_exec($ch);
-        $error = curl_error($ch);
-        curl_close($ch);
-        $data = json_decode($response);
-
-        $isServerConnectionOk = isset($data) && !empty($data) ? true : false;
-
-        if ($isServerConnectionOk) {
-            $clientVersionNumber = $this->stringToNumberConvert(env('VERSION'));
-            $demoVersionNumber      = $this->stringToNumberConvert($data->demo_version);
-            $minimumRequiredVersion = $this->stringToNumberConvert($data->minimum_required_version);
-            if ($demoVersionNumber > $clientVersionNumber && $clientVersionNumber >= $minimumRequiredVersion) {
-                $versionUpgradeData['alert_version_upgrade_enable'] = true;
-            }
-            $versionUpgradeData['demo_version'] = $data->demo_version;
-            $versionUpgradeData['version_upgrade_file_url'] = $data->version_upgrade_file_url;
-            $versionUpgradeData['latest_version_db_migrate_enable'] = $data->latest_version_db_migrate_enable;
-        };
+        $versionUpgradeData = [
+            "alert_version_upgrade_enable" => false,
+            "demo_version" => "1.5.1",
+            "version_upgrade_file_url" => "#",
+            "latest_version_db_migrate_enable" => false,
+        ];
 
         return $versionUpgradeData;
     }
