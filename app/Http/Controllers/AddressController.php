@@ -85,13 +85,13 @@ class AddressController extends Controller
 					})
                     ->addColumn('country',function ($row)
                     {
-                        return $row->getCountry->name;
+                        return $row->getCountry?->name;
                     })
                     ->addColumn('province', function ($row) {
-                        return $row->province ? $row->province->name : 'N/A';
+                        return $row->province ? $row->province?->name : 'N/A';
                     })
                     ->addColumn('city', function ($row) {
-                        return $row->city ? $row->city->name : 'N/A';
+                        return $row->city ? $row->city?->name : 'N/A';
                     })
 					->addColumn('action', function ($data) use ($logged_user,$employee_id)
 					{
