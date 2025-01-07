@@ -325,10 +325,8 @@ class EmployeeController extends Controller
             $statuses = status::select('id', 'status_title')->get();
             // $roles = Role::select('id', 'name')->get();
             $countries = DB::table('countries')->select('id', 'name')->get();
-            // $cities = DB::table('cities')->select('id', 'name')->get();
-            $cities = DB::table('cities')->select('id', 'name')->limit(100)->get();
-            $provinces = DB::table('provinces')->select('id', 'name')->limit(100)->get();
-            // $provinces = DB::table('provinces')->select('id', 'name')->get();
+            $cities = City::select('id', 'name')->get();
+            $provinces = Province::select('id', 'name')->get();
             $document_types = DocumentType::select('id', 'document_type')->get();
 
             $education_levels = QualificationEducationLevel::select('id', 'name')->get();

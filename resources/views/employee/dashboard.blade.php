@@ -113,6 +113,12 @@
                                                aria-selected="false">{{trans('file.Office Details')}}</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" href="{{route('addresses.show', $employee)}}"
+                                               id="address-tab" data-toggle="tab" data-table="address"
+                                               data-target="#Address" role="tab" aria-controls="Address"
+                                               aria-selected="false">{{__('Address')}}</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link" href="{{route('work_experience.show',$employee)}}"
                                                id="work_experience-tab" data-toggle="tab" data-table="work_experience"
                                                data-target="#Work_experience" role="tab" aria-controls="Work_experience"
@@ -124,6 +130,7 @@
                                                data-target="#Bank_account" role="tab" aria-controls="Bank_account"
                                                aria-selected="false">{{__('Bank Account')}}</a>
                                         </li>
+                                        
                                     </ul>
                                 </div>
                                 @endcan
@@ -451,12 +458,19 @@
                                             <hr>
                                             @include('employee.documents.index')
                                         </div>
+                                       
                                         <div class="tab-pane fade" id="Qualification" role="tabpanel"
                                              aria-labelledby="qualification-tab">
                                             {{__('All Qualifications')}}
                                             <hr>
                                             @include('employee.qualifications.index')
                                         </div>
+                                        <div class="tab-pane fade" id="Address" role="tabpanel" aria-labelledby="address-tab">
+                                            {{__('Employee Address')}}
+                                            <hr>
+                                            @include('employee.address.index')
+                                        </div>
+                                     
                                         <div class="tab-pane fade" id="Office" role="tabpanel"
                                              aria-labelledby="office-tab">
                                             {{__('Office Details')}}
@@ -609,6 +623,9 @@
 
     $('[data-table="qualification"]').one('click', function (e) {
         @include('employee.qualifications.index_js')
+    });
+    $('[data-table="address"]').one('click', function (e) {
+        @include('employee.address.index_js')
     });
 
     $('[data-table="work_experience"]').one('click', function (e) {
