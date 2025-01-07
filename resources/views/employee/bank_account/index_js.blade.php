@@ -50,12 +50,29 @@ $('#bank_account-table').DataTable().clear().destroy();
                 name: 'bank_name',
             },
             {
+                data: 'accountType',
+                name: 'accountType',
+            },
+            {
                 data: 'bank_branch',
                 name: 'bank_branch',
             },
             {
-                data: 'bank_code',
-                name: 'bank_code',
+                data: 'branch_code',
+                name: 'branch_code',
+            },
+       
+            {
+                data: 'swift_code',
+                name: 'swift_code',
+            },
+            {
+                data: 'short_name',
+                name: 'short_name',
+            },
+            {
+                data: 'address',
+                name: 'address',
             },
             {
                 data: 'action',
@@ -178,19 +195,24 @@ $('#bank_account-table').DataTable().clear().destroy();
             url: target,
             dataType: "json",
             success: function (html) {
+                console.log(html);
 
                 let id = html.data.id;
 
                 $('#bank_account_title').val(html.data.account_title);
                 $('#bank_account_number').val(html.data.account_number);
                 $('#bank_bank_name').val(html.data.bank_name);
-                $('#bank_bank_code').val(html.data.bank_code);
+                $('#bank_branch_code').val(html.data.branch_code);
                 $('#bank_bank_branch').val(html.data.bank_branch);
+                $('#bank_account_type_id').selectpicker('val', html.data.account_type_id);
+                $('#bank_swift_code').val(html.data.swift_code);
+                $('#bank_short_name').val(html.data.short_name);
+                $('#bank_address').val(html.data.address);
 
 
                 $('#bank_account_hidden_id').val(html.data.id);
                 $('.modal-title').text('{{trans('file.Edit')}}');
-                $('#bank_account_action_button').val('{{trans('file.Edit')}}');
+                $('#bank_account_action_button').val('{{trans('file.Update')}}');
                 $('#bank_account_action').val('{{trans('file.Edit')}}');
                 $('#BankAccountformModal').modal('show');
             }

@@ -58,6 +58,10 @@
                 name: 'education_level',
             },
             {
+                data: 'result',
+                name: 'result',
+            },
+            {
                 data: 'action',
                 name: 'action',
                 orderable: false

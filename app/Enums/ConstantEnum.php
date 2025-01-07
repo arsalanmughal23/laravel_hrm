@@ -17,4 +17,5 @@ enum ConstantEnum: string
     case KEY_COST_CENTER = 'cost_center';
     case KEY_EMP_STATUS = 'emp_status';
     case KEY_LEAVING_REASON = 'leaving_reason';
+    case KEY_ACCOUNT_TYPE = 'account_type';
 }
