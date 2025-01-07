@@ -2,13 +2,13 @@
 <br>
 
 
-<p align="center"><img src="https://snipboard.io/2Sn5MK.jpg" width="400"></p>
+<p align="center"><img src="https://github.com/arsalanmughal23/laravel_hrm/blob/pre-develop/public/images/logo/logo.png" width="400"></p>
 
 
 
 ## About
 
-#### <i>Released in WebDeveloper: 12 November 2020</i>
+#### <i>Released in PandaHCM: 2025</i>
 
 PandaHcm HRM, Payroll & Project Management system is a comprehensive and cutting-edge software solution designed to streamline and optimize human resource management and project management processes within organizations. With its wide range of features and user-friendly interface, it empowers businesses to efficiently manage their workforce and projects, leading to increased productivity and improved overall performance. Manage multiple companies, departments, employees, projects and much more from an intuitive admin panel that you’ll love to use. No matter what is the size of your company, PandaHcm is capable of handling all your HR related tasks.
 
@@ -60,16 +60,3 @@ Developed, maintained and client support for the PandaHcm HRM Laravel app since 
 - Continously Client Support
 - Try to write clean and maintaible code according to Industry best practice.
 
-## Visit
-Demo : https://peopleprohrm.com/demo/
-
-WebDeveloper : https://codecanyon.net/item/peoplepro-hrm-payroll-project-management/29169229
-
-## Credits 
-
-- #### Author : [LION CODERS](https://lion-coders.com/)
-- #### Template Design : [Tarik Iqbal](https://www.linkedin.com/in/tarik-iqbal-51046b34/)
-
--  #### Original Developer :  [Ashraf Shahadat](https://github.com/Ash-raf10) <small><i>[Till 2020]</i></small>
-
-- #### Contributors : [Irfan Chowdhury](https://github.com/Irfan-Chowdhury) <small><i>[January, 2021 - Present]</i></small>

@@ -28,7 +28,7 @@ class GeneralSettingSeeder extends Seeder
             'date_format' => $dateFormat,
             'theme' => "default.css",
             'footer' => "PandaHcm",
-            'footer_link' => "https://www.lion-coders.com",
+            'footer_link' => "#",
         ]);
 
         //writting timezone info in .env file

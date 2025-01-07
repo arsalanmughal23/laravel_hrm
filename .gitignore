@@ -37,7 +37,6 @@ yarn-error.log
 /.idea
 /.vscode
 
-peoplepro.zip
 vendorSAAS.zip
 # git rm -r --cached database/migrations
 
