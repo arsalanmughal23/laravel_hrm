@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             ConstantSeeder::class,
             CountriesTableSeeder::class,
-            // GeneralSettingSeeder::class,
+            GeneralSettingSeeder::class,
             // PermissionsSeeder::class,
             // RoleSeeder::class,
             // UserSeeder::class,
@@ -30,7 +30,6 @@ class DatabaseSeeder extends Seeder
             StationSeeder::class,
             RegionSeeder::class
             // DesignationSeeder::class,
-            
         ]);
 
     }
