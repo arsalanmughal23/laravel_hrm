@@ -415,6 +415,7 @@ return array (
   'Purchase' => 'Purchase',
   'Qty' => 'Qty',
   'Qualification' => 'Qualification',
+  'Region' => 'Region',
   'Resign Date' => 'Resign Date',
   'RTL Layout' => 'RTL Layout',
   'Rate' => 'Rate',

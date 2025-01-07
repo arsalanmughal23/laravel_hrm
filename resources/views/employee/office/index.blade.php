@@ -93,7 +93,7 @@
                 <div class="col-md-6 form-group">
                     <label>{{ __('Expected Confirmation Days') }}</label>
                     <input type="number" name="expected_confirmation_days" id="expected_confirmation_days_id" placeholder="{{ trans('file.Expected Confirmation Days') }}"
-                        class="form-control" value="{{ $employee->office?->expected_confirmation_days }}">
+                        class="form-control text-left" value="{{ $employee->office?->expected_confirmation_days }}">
                 </div>
                 <div class="col-md-6 form-group">
                     <label>{{ __('Contract Start Date') }}</label>
