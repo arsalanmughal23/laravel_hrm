@@ -66,37 +66,21 @@ class OfficeController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['errors' => $validator->errors()->all()]);
                 }
-
-            
             $data = [];
-            // $data['employee_id'] = $employee;
-            // $data['department_id'] = $request->department_id;
-            // $data['designation_id'] = $request->designation_id;
-            // $data['station_id'] = $request->station_id;
-            // $data['cost_center_id'] = $request->cost_center_id;
-            // $data['joining_date'] = $request->joining_date;
-            // $data['confirmation_date'] = $request->confirmation_date;
-            // $data['expected_confirmation_days'] = $request->expected_confirmation_days;
-            // $data['contract_start_date'] = $request->contract_start_date;
-            // $data['contract_end_date'] = $request->contract_end_date;
-            // $data['resign_date'] = $request->resign_date;
-            // $data['leaving_reason_id'] = $request->leaving_reason_id;
-            // $data['employee_status_id'] = $request->employee_status_id;
-            // $data['gl_class_id'] = $request->gl_class_id;
-            // $data['region_id'] = $request->region_id;
-            // $data['status_id'] = $request->status_id;
             $data = $request->only('department_id', 'designation_id', 'station_id', 'cost_center_id', 
             'joining_date', 'confirmation_date', 'expected_confirmation_days', 'contract_start_date', 
-            'contract_end_date', 'resign_date', 'leaving_reason_id', 'employee_status_id', 'gl_class_id', 'region_id', 'status_id','leaving_date');
-
+            'contract_end_date', 'resign_date', 'leaving_reason_id', 'employee_status_id', 'gl_class_id', 
+            'region_id', 'status_id','leaving_date');
 
             $data['password'] = Hash::make($request->password);
 
-            $modifiedRecord = $employee->office()->updateOrCreate(
+            $record = $employee->office()->updateOrCreate(
                 ['employee_id' => $employee->id], 
                 $data 
             );
-            // dd($modifiedRecord);
+            if ($record->wasRecentlyCreated) {
+                return response()->json(['success' => __('Data Added successfully')]);
+            }            
             return response()->json(['success' => __('Data Updated successfully')]);
         }
 

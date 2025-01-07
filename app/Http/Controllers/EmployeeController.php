@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\ConstantEnum;
 use App\Models\company;
 use App\Models\DeductionType;
 use App\Models\department;
@@ -341,10 +342,22 @@ class EmployeeController extends Controller
             $stations = Station::select('id', 'name')->get();
             $regions = Region::select('id', 'name')->get();
             $cost_centers = Constant::where('group','employee')->where('key','cost_center')->get();
-            $leaving_reasons = Constant::where('group','employee')->where('key','leaving_reason')->get();
-            $employee_status = Constant::where('group','employee')->where('key','emp_status')->get();
-            $all_status = Constant::where('group','employee')->where('key','status')->get();
-            $gl_classes = Constant::where('group','employee')->where('key','gl_class')->get();
+            // $leaving_reasons = Constant::where('group','employee')->where('key','leaving_reason')->get();
+            $leaving_reasons = Constant::where('group',ConstantEnum::GroupEmployee->value)
+                                        ->where('key',ConstantEnum::KeyLeavingReason->value)
+                                        ->get();
+            // $employee_status = Constant::where('group','employee')->where('key','emp_status')->get();
+            $employee_status = Constant::where('group',ConstantEnum::GroupEmployee->value)
+                                        ->where('key',ConstantEnum::KeyEmpStatus->value)
+                                        ->get();
+            // $all_status = Constant::where('group','employee')->where('key','status')->get();
+            $all_status = Constant::where('group',ConstantEnum::GroupEmployee->value)
+                                        ->where('key',ConstantEnum::KeyStatus->value)
+                                        ->get();
+            // $gl_classes = Constant::where('group','employee')->where('key','gl_class')->get();
+            $gl_classes = Constant::where('group',ConstantEnum::GroupEmployee->value)
+                                        ->where('key',ConstantEnum::KeyGLClass->value)
+                                        ->get();
 
             return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies', 'all_departments', 'all_designations',
                 'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_status','all_status','gl_classes' ,'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
