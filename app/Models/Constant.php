@@ -31,5 +31,9 @@ class Constant extends Model
     {
         return $query->where('text', $text);
     }
+    public function scopeActive(Builder $query)
+    {
+        return $query->where('active', true);
+    }
 
 }
