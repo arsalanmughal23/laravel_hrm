@@ -5,16 +5,16 @@ namespace App\Enums;
 enum ConstantEnum: string
 {
     // Groups
-    case GroupGeneral = 'general';
-    case GroupUser = 'user';
-    case GroupEmployee = 'employee';
+    case GROUP_GENERAL = 'general';
+    case GROUP_USER = 'user';
+    case GROUP_EMPLOYEE = 'employee';
 
     // Keys
-    case KeyStatus = 'status';
-    case KeyGender = 'gender';
-    case KeyMartialStatus = 'marital_status';
-    case KeyGLClass = 'gl_class';
-    case KeyCostCenter = 'cost_center';
-    case KeyEmpStatus = 'emp_status';
-    case KeyLeavingReason = 'leaving_reason';
+    case KEY_STATUS = 'status';
+    case KEY_GENDER = 'gender';
+    case KEY_MARITAL_STATUS = 'marital_status';
+    case KEY_GL_CLASS = 'gl_class';
+    case KEY_COST_CENTER = 'cost_center';
+    case KEY_EMP_STATUS = 'emp_status';
+    case KEY_LEAVING_REASON = 'leaving_reason';
 }

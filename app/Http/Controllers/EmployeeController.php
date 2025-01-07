@@ -13,6 +13,7 @@ use App\Http\traits\LeaveTypeDataManageTrait;
 use App\Imports\UsersImport;
 use App\Models\City;
 use App\Models\Constant;
+use App\Models\Country;
 use App\Models\LoanType;
 use App\Models\office_shift;
 use App\Models\Province;
@@ -325,9 +326,18 @@ class EmployeeController extends Controller
 
             $statuses = status::select('id', 'status_title')->get();
             // $roles = Role::select('id', 'name')->get();
-            $countries = DB::table('countries')->select('id', 'name')->get();
-            $cities = City::select('id', 'name')->get();
-            $provinces = Province::select('id', 'name')->get();
+            $countries = Country::whereRelation('status',function($query){
+                                    $query->where('active',true);
+                                })->select('id', 'name')
+                                ->get();
+            $cities = City::whereRelation('status',function($query){
+                                    $query->where('active',true);
+                                })->select('id', 'name')
+                                ->get();
+            $provinces = Province::whereRelation('status',function($query){
+                                    $query->where('active',true);
+                                })->select('id', 'name')
+                                ->get();
             $document_types = DocumentType::select('id', 'document_type')->get();
 
             $education_levels = QualificationEducationLevel::select('id', 'name')->get();
@@ -341,22 +351,21 @@ class EmployeeController extends Controller
             $all_designations = designation::select('id', 'designation_name')->get();
             $stations = Station::select('id', 'name')->get();
             $regions = Region::select('id', 'name')->get();
-            $cost_centers = Constant::where('group','employee')->where('key','cost_center')->get();
-            // $leaving_reasons = Constant::where('group','employee')->where('key','leaving_reason')->get();
-            $leaving_reasons = Constant::where('group',ConstantEnum::GroupEmployee->value)
-                                        ->where('key',ConstantEnum::KeyLeavingReason->value)
+            $cost_centers = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
+                                        ->where('key',ConstantEnum::KEY_COST_CENTER)
                                         ->get();
-            // $employee_status = Constant::where('group','employee')->where('key','emp_status')->get();
-            $employee_status = Constant::where('group',ConstantEnum::GroupEmployee->value)
-                                        ->where('key',ConstantEnum::KeyEmpStatus->value)
+            $leaving_reasons = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
+                                        ->where('key',ConstantEnum::KEY_LEAVING_REASON)
+                                        ->active()
                                         ->get();
-            // $all_status = Constant::where('group','employee')->where('key','status')->get();
-            $all_status = Constant::where('group',ConstantEnum::GroupEmployee->value)
-                                        ->where('key',ConstantEnum::KeyStatus->value)
+            $employee_status = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
+                                        ->where('key',ConstantEnum::KEY_EMP_STATUS)
                                         ->get();
-            // $gl_classes = Constant::where('group','employee')->where('key','gl_class')->get();
-            $gl_classes = Constant::where('group',ConstantEnum::GroupEmployee->value)
-                                        ->where('key',ConstantEnum::KeyGLClass->value)
+            $all_status = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
+                                        ->where('key',ConstantEnum::KEY_STATUS)
+                                        ->get();
+            $gl_classes = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
+                                        ->where('key',ConstantEnum::KEY_GL_CLASS)
                                         ->get();
 
             return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies', 'all_departments', 'all_designations',
