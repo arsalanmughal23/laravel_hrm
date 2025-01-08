@@ -128,6 +128,16 @@
                         @csrf
                         <div class="row">
                             <div class="col-md-6 form-group">
+                                <label class="text-bold">{{__('Employee Code')}} <span class="text-danger">*</span></label>
+                                <input type="text" name="employee_code" id="employee_code" placeholder="{{__('Employee Code')}}"
+                                    class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="text-bold">{{__('Punch Code')}} <span class="text-danger">*</span></label>
+                                <input type="text" name="punch_code" id="punch_code" placeholder="{{__('Punch Code')}}"
+                                    class="form-control">
+                            </div>
+                            <div class="col-md-6 form-group">
                                 <label class="text-bold">{{__('First Name')}} <span class="text-danger">*</span></label>
                                 <input type="text" name="first_name" id="first_name" placeholder="{{__('First Name')}}"
                                        required class="form-control">
@@ -159,62 +169,61 @@
                                 <input type="text" name="date_of_birth" id="date_of_birth" required autocomplete="off"
                                        class="form-control date" value="">
                             </div>
-
+                            <div class="col-md-6 form-group">
+                                <label class="text-bold">{{__('Place Of Birth')}} <span class="text-danger">*</span></label>
+                                <input type="text" name="place_of_birth" id="place_of_birth" required autocomplete="off"
+                                       class="form-control" value="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="text-bold">{{__('CNIC')}} <span class="text-danger">*</span></label>
+                                <input type="text" name="cnic" id="cnic" required autocomplete="off"
+                                       class="form-control" value="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="text-bold">{{__('CNIC Issuance Date')}} <span class="text-danger">*</span></label>
+                                <input type="text" name="cnic_issuance_date" id="cnic_issuance_date" required autocomplete="off"
+                                       class="form-control date" value="">
+                            </div>
+                            <div class="col-md-6 form-group">
+                                <label class="text-bold">{{trans('file.reporting_manager')}}</label>
+                                <select name="report_to_employee_id" id="report_to_employee_id" class="selectpicker form-control"
+                                        data-live-search="true" data-live-search-style="contains"
+                                        title="{{__('Selecting',['key'=>trans('file.reporting_manager')])}}...">
+                                    @foreach ($employees as $employee)
+                                        <option value="{{$employee->id}}">{{$employee->full_name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
                             <div class="col-md-6 form-group">
                                 <label class="text-bold">{{trans('file.Gender')}}</label>
-                                <select name="gender" id="gender" class="selectpicker form-control"
+                                <select name="gender_id" id="gender_id" class="selectpicker form-control"
                                         data-live-search="true" data-live-search-style="contains"
                                         title="{{__('Selecting',['key'=>trans('file.Gender')])}}...">
-                                    <option value="Male">{{trans('file.Male')}}</option>
-                                    <option value="Female">{{trans('file.Female')}}</option>
-                                    <option value="Other">{{trans('file.Other')}}</option>
+                                    @foreach ($genders as $gender)
+                                        <option value="{{$gender->id}}">{{$gender->text}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-
-
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="text-bold">{{trans('file.Company')}} <span class="text-danger">*</span></label>
-                                    <select name="company_id" id="company_id" required
-                                            class="form-control selectpicker dynamic"
-                                            data-live-search="true" data-live-search-style="contains"
-                                            data-shift_name="shift_name" data-dependent="department_name"
-                                            title="{{__('Selecting',['key'=>trans('file.Company')])}}...">
-                                        @foreach($companies as $company)
-                                            <option value="{{$company->id}}">{{$company->company_name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label class="text-bold">{{trans('file.Department')}} <span class="text-danger">*</span></label>
-                                    <select name="department_id" id="department_id" required
-                                            class="selectpicker form-control designation"
-                                            data-live-search="true" data-live-search-style="contains"
-                                            data-designation_name="designation_name"
-                                            title="{{__('Selecting',['key'=>trans('file.Department')])}}...">
-                                    </select>
-                                </div>
-                            </div>
-
-
                             <div class="col-md-6 form-group">
-                                <label class="text-bold">{{trans('file.Designation')}} <span class="text-danger">*</span></label>
-                                <select name="designation_id" id="designation_id" required class="selectpicker form-control"
+                                <label class="text-bold">{{trans('file.marital_status')}}</label>
+                                <select name="marital_status_id" id="marital_status_id" class="selectpicker form-control"
                                         data-live-search="true" data-live-search-style="contains"
-                                        title="{{__('Selecting',['key'=>trans('file.Designation')])}}...">
+                                        title="{{__('Selecting',['key'=>trans('file.marital_status')])}}...">
+                                    @foreach ($marital_statuses as $marital_status)
+                                        <option value="{{$marital_status->id}}">{{$marital_status->text}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-
                             <div class="col-md-6 form-group">
-                                <label class="text-bold">{{trans('file.Office_Shift')}} <span class="text-danger">*</span></label>
-                                <select name="office_shift_id" id="office_shift_id" required class="selectpicker form-control"
+                                <label class="text-bold">{{trans('file.religion')}}</label>
+                                <select name="religion_id" id="religion_id" class="selectpicker form-control"
                                         data-live-search="true" data-live-search-style="contains"
-                                        title="{{__('Selecting',['key'=>trans('file.Office_Shift')])}}...">
+                                        title="{{__('Selecting',['key'=>trans('file.religion')])}}...">
+                                    @foreach ($religions as $religion)
+                                        <option value="{{$religion->id}}">{{$religion->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
-
                             <div class="col-md-6 form-group">
                                 <label class="text-bold">{{trans('file.Username')}} <span class="text-danger">*</span></label>
                                 <input type="text" name="username" id="username"
@@ -267,19 +276,24 @@
                                     <option value="ip_based">{{__('IP Based')}}</option>
                                 </select>
                             </div>
-
-                            <div class="col-md-6 form-group">
-                                <label class="text-bold">{{__('Date Of Joining')}} <span class="text-danger">*</span></label>
-                                <input type="text" name="joining_date" id="joining_date" class="form-control date">
+                            <div class="col-md-6">
+                                <div class="mt-4 form-check">
+                                    <input type="checkbox" name="allow_manual_attendance" class="form-check-input" value="1" />
+                                    <label class="mr-4 form-check-label"><strong>{{trans('file.allow_manual_attendance')}} </strong></label>
+                                </div>
                             </div>
-
-                            <div class="col-md-6 form-group">
-                                <label for="profile_photo" class=""><strong>{{ __('Image') }}</strong></label>
+                            <div class="col-md-6">
+                                <div class="mt-4 form-check">
+                                    <input type="checkbox" name="allow_login" class="form-check-input" value="1" />
+                                    <label class="mr-4 form-check-label"><strong>{{trans('file.allow_login')}} </strong></label>
+                                </div>
+                            </div>
+                            <div class="col-md-12 form-group">
+                                <label for="profile_photo" class="mt-2"><strong>{{ __('Image') }}</strong></label>
                                 <input type="file" id="profile_photo"
                                        class="form-control @error('photo') is-invalid @enderror"
                                        name="profile_photo" placeholder="{{__('Upload',['key'=>trans('file.Photo')])}}">
                             </div>
-
                             {{-- <div class="col-md-6 form-group"  id="ipField"></div> --}}
 
 

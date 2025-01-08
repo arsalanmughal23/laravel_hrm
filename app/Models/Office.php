@@ -22,6 +22,12 @@ class Office extends Model
     public function employee(){
         return $this->belongsTo(Employee::class);
     }
+    public function department(){
+        return $this->belongsTo(department::class);
+    }
+    public function designation(){
+        return $this->belongsTo(designation::class);
+    }
     public function leavingReason(){
         return $this->belongsTo(Constant::class,'leaving_reason_id');
     }

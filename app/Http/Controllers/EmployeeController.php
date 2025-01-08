@@ -22,6 +22,7 @@ use App\Models\QualificationLanguage;
 use App\Models\QualificationSkill;
 use App\Models\Region;
 use App\Models\RelationType;
+use App\Models\Religion;
 use App\Models\Station;
 use App\Models\status;
 use App\Models\User;
@@ -29,6 +30,7 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Validators\ValidationException;
@@ -100,7 +102,7 @@ class EmployeeController extends Controller
                 })
                 ->get();
         } else {
-            $employees = Employee::with('user:id,profile_photo,username', 'company:id,company_name', 'department:id,department_name', 'designation:id,designation_name', 'officeShift:id,shift_name')
+            $employees = Employee::with('user:id,profile_photo,username', 'company:id,company_name', 'department:id,department_name', 'designation:id,designation_name', 'officeShift:id,shift_name','employeeGender:id,text')
                 ->orderBy('company_id')
                 ->where('is_active', 1)
                 ->where(function($query) use ($currentDate) {
@@ -118,9 +120,18 @@ class EmployeeController extends Controller
     {
         $logged_user = auth()->user();
         if ($logged_user->can('view-details-employee')) {
-            // $companies = company::select('id', 'company_name')->get();
-            $companies = company::select('id', 'company_name')->active()->get();
-            $roles = Role::where('id', '!=', 3)->where('is_active', 1)->select('id', 'name')->get();
+            $companies        = company::select('id', 'company_name')->active()->get();
+            $roles            = Role::where('id', '!=', 3)->where('is_active', 1)->select('id', 'name')->get();
+            $employees        = Employee::select('id','first_name','last_name')->active()->get();
+            $religions        = Religion::select('id','name')->orderBy('name')->get();
+            $genders          = Constant::where('group',ConstantEnum::GROUP_USER)
+                                ->where('key',ConstantEnum::KEY_GENDER)
+                                ->active()
+                                ->get();
+            $marital_statuses = Constant::where('group',ConstantEnum::GROUP_USER)
+                                        ->where('key',ConstantEnum::KEY_MARITAL_STATUS)
+                                        ->active()
+                                        ->get();
             $currentDate = date('Y-m-d');
 
             if (request()->ajax()) {
@@ -144,8 +155,8 @@ class EmployeeController extends Controller
                         $username = '<span>'.__('file.Username').': '.($row->user->username ?? '').'</span>';
                         $staff_id = '<span>'.__('file.Staff Id').': '.($row->staff_id ?? '').'</span>';
                         $gender = '';
-                        if ($row->gender != null) {
-                            $gender = '<span>'.__('file.Gender').': '.__('file.'.$row->gender ?? '').'</span></br>';
+                        if ($row->gender_id != null) {
+                            $gender = '<span>'.__('file.Gender').': '.__('file.'.$row->employeeGender->text ?? '').'</span></br>';
                         }
 
                         $shift = '<span>'.__('file.Shift').': '.($row->officeShift->shift_name ?? '').'</span>';
@@ -169,8 +180,8 @@ class EmployeeController extends Controller
                     })
                     ->addColumn('company', function ($row) {
                         $company = "<span class='text-bold'>".strtoupper($row->company->company_name ?? '').'</span>';
-                        $department = '<span>'.__('file.Department').' : '.($row->department->department_name ?? '').'</span>';
-                        $designation = '<span>'.__('file.Designation').' : '.($row->designation->designation_name ?? '').'</span>';
+                        $department = '<span>'.__('file.Department').' : '.($row->office->department->department_name ?? '').'</span>';
+                        $designation = '<span>'.__('file.Designation').' : '.($row->office->designation->designation_name ?? '').'</span>';
 
                         return $company.'</br>'.$department.'</br>'.$designation;
                     })
@@ -202,7 +213,7 @@ class EmployeeController extends Controller
                     ->rawColumns(['name', 'company', 'contacts', 'action'])
                     ->make(true);
             }
-            return view('employee.index', compact('companies', 'roles'));
+            return view('employee.index', compact('companies','roles','employees','genders','marital_statuses','religions'));
         } else {
             return response()->json(['success' => __('You are not authorized')]);
         }
@@ -210,12 +221,15 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
+        Log::debug([$request->all()]);
         $logged_user = auth()->user();
 
         if ($logged_user->can('store-details-employee')) {
             if (request()->ajax()) {
-                $validator = Validator::make($request->only('first_name', 'last_name', 'staff_id', 'email', 'contact_no', 'date_of_birth', 'gender',
-                    'username', 'role_users_id', 'password', 'password_confirmation', 'company_id', 'department_id', 'designation_id', 'office_shift_id', 'attendance_type', 'joining_date'),
+                $validator = Validator::make($request->only('first_name', 'last_name', 'staff_id', 'email', 'contact_no', 'date_of_birth', 'place_of_birth' ,
+                    'gender_id','marital_status_id', 'report_to_employee_id',
+                    'religion_id', 'employee_code','punch_code',
+                    'username', 'role_users_id', 'password', 'password_confirmation', 'attendance_type','allow_login','allow_manual_attendance'),
                     [
                         'first_name' => 'required',
                         'last_name' => 'required',
@@ -223,16 +237,18 @@ class EmployeeController extends Controller
                         'email' => 'nullable|email|unique:users',
                         'contact_no' => 'required|numeric|unique:users',
                         'date_of_birth' => 'required',
-                        'company_id' => 'required',
-                        'department_id' => 'required',
-                        'designation_id' => 'required',
-                        'office_shift_id' => 'required',
+                        'place_of_birth' => 'required',
                         'username' => 'required|unique:users',
                         'role_users_id' => 'required',
                         'password' => 'required|min:4|confirmed',
                         'attendance_type' => 'required',
-                        'joining_date' => 'required',
                         'profile_photo' => 'nullable|image|max:10240|mimes:jpeg,png,jpg,gif',
+                        'employee_code' => 'required',
+                        'punch_code' => 'required',
+                        'gender_id' => 'required',
+                        'marital_status_id' => 'required',
+                        'report_to_employee_id' => 'required',
+                        'religion_id' => 'required',
                     ]
                 );
 
@@ -241,22 +257,11 @@ class EmployeeController extends Controller
                 }
 
                 $data = [];
-                $data['first_name'] = $request->first_name;
-                $data['last_name'] = $request->last_name;
-                $data['staff_id'] = $request->staff_id;
-                $data['date_of_birth'] = $request->date_of_birth;
-                $data['gender'] = $request->gender;
-                $data['department_id'] = $request->department_id;
-                $data['company_id'] = $request->company_id;
-                $data['designation_id'] = $request->designation_id;
-                $data['office_shift_id'] = $request->office_shift_id;
-
-                $data['email'] = strtolower(trim($request->email));
-                $data['role_users_id'] = $request->role_users_id;
-                $data['contact_no'] = $request->contact_no;
-                $data['attendance_type'] = $request->attendance_type; //new
-                $data['joining_date'] = $request->joining_date; //new
+                $data = $request->only('first_name', 'last_name', 'staff_id', 'email', 'contact_no', 'date_of_birth', 'place_of_birth' ,
+                'gender_id','marital_status_id', 'cnic','cnic_issuance_date','report_to_employee_id', 'employee_code','punch_code',
+                'religion_id','role_users_id','attendance_type','allow_login','allow_manual_attendance');
                 $data['is_active'] = 1;
+                $data['email'] = strtolower(trim($request->email));
 
                 $user = [];
                 $user['first_name'] = $request->first_name;
@@ -371,9 +376,20 @@ class EmployeeController extends Controller
                                         ->where('key',ConstantEnum::KEY_ACCOUNT_TYPE)
                                         ->active()
                                         ->get();
+            $genders          = Constant::where('group',ConstantEnum::GROUP_USER)
+                                        ->where('key',ConstantEnum::KEY_GENDER)
+                                        ->active()
+                                        ->get();
+            $marital_statuses = Constant::where('group',ConstantEnum::GROUP_USER)
+                                        ->where('key',ConstantEnum::KEY_MARITAL_STATUS)
+                                        ->active()
+                                        ->get();
+            $employees        = Employee::select('id','first_name','last_name')->active()->get();
+            $religions        = Religion::select('id','name')->get();
 
             return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies', 'all_departments', 'all_designations',
-                'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_status','all_status','gl_classes','bank_account_types' ,'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
+                'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_status','all_status','gl_classes','bank_account_types' ,'genders',
+                 'marital_statuses','employees','religions','departments', 'designations', 'statuses', 'office_shifts', 'document_types',
                 'education_levels', 'language_skills', 'general_skills', 'roles','relationTypes','loanTypes','deductionTypes'));
         } else {
             return response()->json(['success' => __('You are not authorized')]);
@@ -463,9 +479,9 @@ class EmployeeController extends Controller
 
         if ($logged_user->can('modify-details-employee')) {
             if (request()->ajax()) {
-                $validator = Validator::make($request->only('first_name', 'last_name', 'staff_id', 'email', 'contact_no', 'date_of_birth', 'gender',
-                    'username', 'role_users_id', 'company_id', 'department_id', 'designation_id', 'office_shift_id', 'location_id', 'status_id',
-                    'marital_status', 'joining_date', 'permission_role_id', 'address', 'city', 'state', 'country', 'zip_code', 'attendance_type', 'total_leave'
+                $validator = Validator::make($request->only('first_name', 'last_name', 'staff_id', 'email', 'contact_no', 'date_of_birth','place_of_birth', 'gender_id',
+                    'username', 'role_users_id', 'employee_code','punch_code','cnic','cnic_issuance_date','religion_id','report_to_employee_id','allow_manual_attendance',
+                    'marital_status_id','permission_role_id', 'attendance_type','allow_manual_attendance','allow_login'
                 ),
                     [
                         'first_name' => 'required',
@@ -475,15 +491,16 @@ class EmployeeController extends Controller
                         'email' => 'nullable|email|unique:users,email,'.$employee,
                         'contact_no' => 'required|numeric|unique:users,contact_no,'.$employee,
                         'date_of_birth' => 'required',
-                        'company_id' => 'required',
-                        'department_id' => 'required',
-                        'designation_id' => 'required',
-                        'office_shift_id' => 'required',
+                        'place_of_birth' => 'required',
                         'role_users_id' => 'required',
                         'attendance_type' => 'required',
-                        'total_leave' => 'numeric|min:0',
-                        'joining_date' => 'required',
-                        'exit_date' => 'nullable',
+                        'punch_code' => 'required',
+                        'employee_code' => 'required',
+                        'religion_id' => 'required',
+                        'report_to_employee_id' => 'required',
+                        'marital_status_id' => 'required',
+                        'allow_manual_attendance' => 'nullable',
+                        'allow_login' => 'nullable',
                     ]
                 );
 
@@ -492,34 +509,17 @@ class EmployeeController extends Controller
                 }
 
                 $data = [];
-                $data['first_name'] = $request->first_name;
-                $data['last_name'] = $request->last_name;
-                $data['staff_id'] = $request->staff_id;
-                $data['date_of_birth'] = $request->date_of_birth;
-                $data['gender'] = $request->gender;
-                $data['department_id'] = $request->department_id;
-                $data['company_id'] = $request->company_id;
-                $data['designation_id'] = $request->designation_id;
-                $data['office_shift_id'] = $request->office_shift_id;
-                $data['status_id'] = $request->status_id;
-                $data['marital_status'] = $request->marital_status;
-                if ($request->joining_date) {
-                    $data['joining_date'] = $request->joining_date;
-                }
-
-                $data['exit_date'] = $request->exit_date ? date('Y-m-d', strtotime($request->exit_date)) : null;
-                $data['address'] = $request->address;
-                $data['city'] = $request->city;
-                $data['state'] = $request->state;
-                $data['country'] = $request->country;
-                $data['zip_code'] = $request->zip_code;
-
+                $allowManualAttendance = $request->has('allow_manual_attendance') ? 1 : 0;
+                $allowLogin = $request->has('allow_login') ? 1 : 0;
+                $data = $request->only('first_name', 'last_name', 'staff_id', 'email', 'contact_no', 'date_of_birth','place_of_birth', 'gender_id',
+                'role_users_id', 'employee_code','punch_code','cnic','cnic_issuance_date','religion_id','report_to_employee_id','allow_manual_attendance',
+                'marital_status_id','permission_role_id', 'attendance_type','allow_manual_attendance','allow_login'
+            );
+                $data['allow_manual_attendance'] = $allowManualAttendance;
+                $data['allow_login'] = $allowLogin;
                 $data['email'] = strtolower(trim($request->email));
-                $data['role_users_id'] = $request->role_users_id;
-                $data['contact_no'] = $request->contact_no;
-                $data['attendance_type'] = $request->attendance_type;
                 $data['is_active'] = 1;
-
+                // dd($data);
 
 
                 $user = [];
@@ -553,7 +553,7 @@ class EmployeeController extends Controller
                     return response()->json(['error' => $e->getMessage()]);
                 }
 
-                return response()->json(['success' => __('Data Added successfully.')]);
+                return response()->json(['success' => __('Data Updated successfully.')]);
             }
         }
 
