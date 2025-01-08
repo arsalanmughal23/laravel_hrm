@@ -38,7 +38,7 @@ return new class extends Migration
         $table->boolean('allow_manual_attendance')->default(false)->after('report_to_employee_id');
         $table->boolean('allow_login')->default(true)->after('allow_manual_attendance');
         $table->unsignedBigInteger('martial_status_id')->nullable()->after('contact_no');
-        $table->foreign('martial_status_id','employees_martial_status_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
+        $table->foreign('marital_status_id','employees_martial_status_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
         $table->unsignedBigInteger('gender_id')->nullable()->after('contact_no');
         $table->foreign('gender_id','employees_gender_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
         $table->string('place_of_birth')->nullable()->after('contact_no');
@@ -71,7 +71,7 @@ return new class extends Migration
                 'report_to_employee_id',
                 'allow_manual_attendance',
                 'allow_login',
-                'martial_status_id',
+                'marital_status_id',
                 'gender_id',
                 'place_of_birth',
                 'cnic',
