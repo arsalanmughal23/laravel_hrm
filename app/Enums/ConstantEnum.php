@@ -10,12 +10,12 @@ enum ConstantEnum: string
     case GROUP_EMPLOYEE = 'employee';
 
     // Keys
-    case KEY_STATUS = 'status';
+    case KEY_GENERAL_STATUS = 'status';
     case KEY_GENDER = 'gender';
     case KEY_MARITAL_STATUS = 'marital_status';
     case KEY_GL_CLASS = 'gl_class';
     case KEY_COST_CENTER = 'cost_center';
-    case KEY_EMP_STATUS = 'emp_status';
+    case KEY_EMPLOYEE_STATUS = 'employee_status';
     case KEY_LEAVING_REASON = 'leaving_reason';
     case KEY_ACCOUNT_TYPE = 'account_type';
 }

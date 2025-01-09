@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Office extends Model
 {
@@ -24,5 +25,21 @@ class Office extends Model
     }
     public function leavingReason(){
         return $this->belongsTo(Constant::class,'leaving_reason_id');
+    }
+    public function company()
+    {
+        return $this->belongsTo(company::class);
+    }
+    public function department()
+    {
+        return $this->belongsTo(department::class);
+    }
+    public function designation()
+    {
+        return $this->belongsTo(designation::class);
+    }
+    public function officeShift()
+    {
+        return $this->belongsTo(office_shift::class);
     }
 }

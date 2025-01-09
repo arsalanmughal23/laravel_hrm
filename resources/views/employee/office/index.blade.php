@@ -35,6 +35,7 @@
                         </select>
                     </div>
                 </div>
+                
 
                 <div class="col-md-6">
                     <div class="form-group">
@@ -118,7 +119,7 @@
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="text-bold">{{trans('file.Leaving Reason')}} <span class="text-danger">*</span></label>
+                        <label class="text-bold">{{trans('file.Leaving Reason')}}</label>
                         <select name="leaving_reason_id" id="leaving_reason_id"
                                 class="form-control selectpicker"
                                 data-live-search="true" data-live-search-style="contains"
@@ -138,9 +139,9 @@
                                 class="form-control selectpicker"
                                 data-live-search="true" data-live-search-style="contains"
                                 title="{{__('Selecting',['key'=>trans('file.Employee Status')])}}...">
-                                @foreach ($employee_status as $status )
-                                    <option value="{{$status->id}}" {{$status->id == $employee->office?->employee_status_id ? 'selected' : ''}}>
-                                        {{$status->text}}</option>
+                                @foreach ($employee_statuses as $employee_status )
+                                    <option value="{{$employee_status->id}}" {{$employee_status->id == $employee->office?->employee_status_id ? 'selected' : ''}}>
+                                        {{$employee_status->text}}</option>
                                 @endforeach
                             
                         </select>
@@ -153,9 +154,9 @@
                                 class="form-control selectpicker"
                                 data-live-search="true" data-live-search-style="contains"
                                 title="{{__('Selecting',['key'=>trans('file.Status')])}}...">
-                                @foreach ($all_status as $status )
-                                <option value="{{$status->id}}" {{$status->id == $employee->office?->status_id ? 'selected' : ''}}>
-                                    {{$status->text}}</option>
+                                @foreach ($general_statuses as $general_status )
+                                <option value="{{$general_status->id}}" {{$general_status->id == $employee->office?->status_id ? 'selected' : ''}}>
+                                    {{$general_status->text}}</option>
                             @endforeach
                             
                         </select>
@@ -167,7 +168,7 @@
                         <select name="gl_class_id" id="gl_class_id" required
                                 class="form-control selectpicker"
                                 data-live-search="true" data-live-search-style="contains"
-                                title="{{__('Selecting',['key'=>trans('file.Status')])}}...">
+                                title="{{__('Selecting',['key'=>trans('file.GL Class')])}}...">
                                 @foreach ($gl_classes as $gl_class )
                                 <option value="{{$gl_class->id}}" {{$gl_class->id == $employee->office?->gl_class_id ? 'selected' : ''}}>
                                     {{$gl_class->text}}</option>

@@ -358,11 +358,11 @@ class EmployeeController extends Controller
                                         ->where('key',ConstantEnum::KEY_LEAVING_REASON)
                                         ->active()
                                         ->get();
-            $employee_status = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
-                                        ->where('key',ConstantEnum::KEY_EMP_STATUS)
+            $employee_statuses = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
+                                        ->where('key',ConstantEnum::KEY_EMPLOYEE_STATUS)
                                         ->get();
-            $all_status = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
-                                        ->where('key',ConstantEnum::KEY_STATUS)
+            $general_statuses = Constant::where('group',ConstantEnum::GROUP_GENERAL)
+                                        ->where('key',ConstantEnum::KEY_GENERAL_STATUS)
                                         ->get();
             $gl_classes = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
                                         ->where('key',ConstantEnum::KEY_GL_CLASS)
@@ -373,7 +373,7 @@ class EmployeeController extends Controller
                                         ->get();
 
             return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies', 'all_departments', 'all_designations',
-                'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_status','all_status','gl_classes','bank_account_types' ,'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
+                'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_statuses','general_statuses','gl_classes','bank_account_types' ,'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
                 'education_levels', 'language_skills', 'general_skills', 'roles','relationTypes','loanTypes','deductionTypes'));
         } else {
             return response()->json(['success' => __('You are not authorized')]);
