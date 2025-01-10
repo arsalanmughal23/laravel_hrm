@@ -645,6 +645,7 @@
 
 
     $('.dynamic').change(function () {
+        $('#designation_id').empty();
         if ($(this).val() !== '') {
             let value = $(this).val();
             let dependent = $(this).data('dependent');
@@ -725,6 +726,8 @@
             let value = $('#company_id_filter').val();
             let dependent = $(this).data('dependent');
             let _token = $('input[name="_token"]').val();
+            $('#designation_id_filter').empty();
+
             $.ajax({
                 url: "{{ route('dynamic_department') }}",
                 method: "POST",

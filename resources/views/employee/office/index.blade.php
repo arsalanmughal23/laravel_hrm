@@ -9,33 +9,65 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="text-bold">{{trans('file.Department')}} <span class="text-danger">*</span></label>
-                        <select name="department_id" id="department_id" required
-                                class="form-control selectpicker"
+                        <label class="text-bold">{{trans('file.Company')}} <span class="text-danger">*</span></label>
+                        <select name="company_id" id="company_id" required
+                                class="form-control selectpicker dynamic"
                                 data-live-search="true" data-live-search-style="contains"
-                                title="{{__('Selecting',['key'=>trans('file.Department')])}}...">
-                            @foreach($all_departments as $department)
-                                <option value="{{$department->id}}" {{$department->id == $employee->office?->department_id ? 'selected' : ''}}>
-                                    {{$department->department_name}}</option>
+                                data-shift_name="shift_name" data-dependent="department_name"
+                                title="{{__('Selecting',['key'=>trans('file.Company')])}}...">
+                            @foreach($companies as $company)
+                                <option value="{{$company->id}}" {{($employee->office?->company_id == $company->id) ? 'selected' : ''}}>{{$company->company_name}}</option>
                             @endforeach
                         </select>
                     </div>
                 </div>
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label class="text-bold">{{trans('file.Designation')}} <span class="text-danger">*</span></label>
-                        <select name="designation_id" id="designation_id" required
-                                class="form-control selectpicker"
+                        <label class="text-bold">{{trans('file.Department')}} <span class="text-danger">*</span></label>
+                        <select name="department_id" id="department_id" required
+                                class="selectpicker form-control designation"
                                 data-live-search="true" data-live-search-style="contains"
-                                title="{{__('Selecting',['key'=>trans('file.Designation')])}}...">
-                            @foreach($all_designations as $designation)
-                                <option value="{{$designation->id}}" {{$designation->id == $employee->office?->designation_id ? 'selected' : ''}}>
-                                    {{$designation->designation_name}}</option>
-                            @endforeach
+                                data-designation_name="designation_name"
+                                title="{{__('Selecting',['key'=>trans('file.Department')])}}...">
+                            {{-- populate designations based on selected company --}}
+                            @if($employee->office)
+                            @foreach($selected_departments as $department)
+                                <option value="{{$department->id}}" {{($employee->office->department_id == $department->id) ? 'selected' : ''}}>{{$department->department_name}}</option>
+                            @endforeach    
+                            @endif
+                                
                         </select>
                     </div>
                 </div>
-                
+
+
+                <div class="col-md-6 form-group">
+                    <label class="text-bold">{{trans('file.Designation')}} <span class="text-danger">*</span></label>
+                    <select name="designation_id" id="designation_id" required class="selectpicker form-control"
+                            data-live-search="true" data-live-search-style="contains"
+                            title="{{__('Selecting',['key'=>trans('file.Designation')])}}...">
+                            {{-- populate departments based on selected designation --}}
+                            @if($employee->office)
+                            @foreach($selected_designations as $designation)
+                                <option value="{{$designation->id}}" {{($employee->office->designation_id == $designation->id) ? 'selected' : ''}}>{{$designation->designation_name}}</option>
+                            @endforeach    
+                            @endif
+                    </select>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <label class="text-bold">{{trans('file.Office_Shift')}} <span class="text-danger">*</span></label>
+                    <select name="office_shift_id" id="office_shift_id" required class="selectpicker form-control"
+                            data-live-search="true" data-live-search-style="contains"
+                            title="{{__('Selecting',['key'=>trans('file.Office_Shift')])}}...">
+                            {{-- populate office shifts based on selected company --}}
+                            @if($employee->office)
+                            @foreach($selected_office_shifts as $office_shift)
+                                <option value="{{$office_shift->id}}" {{($employee->office->office_shift_id == $office_shift->id) ? 'selected' : ''}}>{{$office_shift->shift_name}}</option>
+                            @endforeach    
+                            @endif
+                    </select>
+                </div>
 
                 <div class="col-md-6">
                     <div class="form-group">
@@ -120,7 +152,7 @@
                 <div class="col-md-6">
                     <div class="form-group">
                         <label class="text-bold">{{trans('file.Leaving Reason')}}</label>
-                        <select name="leaving_reason_id" id="leaving_reason_id"
+                        <select name="leaving_reason_id" id="leaving_reason_id" required
                                 class="form-control selectpicker"
                                 data-live-search="true" data-live-search-style="contains"
                                 title="{{__('Selecting',['key'=>trans('file.Leaving Reason')])}}...">
@@ -229,7 +261,58 @@
             }
         });
     });
+    $('.dynamic').change(function () {
+        if ($(this).val() !== '') {
+            $('select#designation_id').empty();
 
+            let value = $(this).val();
+            let dependent = $(this).data('dependent');
+            let _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{ route('dynamic_department') }}",
+                method: "POST",
+                data: {value: value, _token: _token, dependent: dependent},
+                success: function (result) {
+                    console.log(`result: ${result}`);
 
+                    $('select#department_id').selectpicker("destroy");                    
+                    $('select#department_id').html(result);
+                    $('select#department_id').selectpicker('refresh');
+                    // $('select').selectpicker();
+                }
+            });
+                dependent = $(this).data('shift_name');
+            $.ajax({
+                url: "{{ route('dynamic_office_shifts') }}",
+                method: "POST",
+                data: {value: value, _token: _token, dependent: dependent},
+                success: function (result) {
+                    $('select#office_shift_id').selectpicker("destroy");                    
+                    $('select#office_shift_id').html(result);
+                    $('select#office_shift_id').selectpicker('refresh');
+
+                }
+            });
+        }
+    });
+    $('.designation').change(function () {
+        if ($(this).val() !== '') {
+            let value = $(this).val();
+            let designation_name = $(this).data('designation_name');
+            let _token = $('input[name="_token"]').val();
+            $.ajax({
+                url: "{{ route('dynamic_designation_department') }}",
+                method: "POST",
+                data: {value: value, _token: _token, designation_name: designation_name},
+                success: function (result) {
+                    $('select#designation_id').selectpicker("destroy");
+                    $('select#designation_id').html(result);
+                    $('select#designation_id').selectpicker('refresh');
+                    
+
+                }
+            });
+        }
+    });
     </script>
 @endpush 

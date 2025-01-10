@@ -37,17 +37,18 @@ class OfficeController extends Controller
         if ($logged_user->can('modify-details-employee') || $logged_user->id == $employee) {
             
             if (request()->ajax()) {
-                $validator = Validator::make($request->only('department_id','designation_id','station_id','cost_center_id','joining_date','confirmation_date',
+                $validator = Validator::make($request->only('company_id','department_id','designation_id','office_shift_id','station_id','cost_center_id','joining_date','confirmation_date',
                 'expected_confirmation_days','contract_start_date','contract_end_date','resign_date','leaving_reason_id','employee_status_id','gl_class_id',
                 'region_id' ,'password','status_id','leaving_date'
                 ),
                     [
-                
-                        'department_id' => 'required',
-                        'designation_id' => 'required',
-                        'station_id' => 'required',
-                        'cost_center_id' => 'required',
-                        'joining_date' => 'required',
+                        'company_id'      => 'required',
+                        'department_id'   => 'required',
+                        'designation_id'  => 'required',
+                        'office_shift_id' => 'required',
+                        'station_id'      => 'required',
+                        'cost_center_id'  => 'required',
+                        'joining_date'    => 'required',
                         'confirmation_date' => 'nullable',
                         'expected_confirmation_days' => 'numeric|min:0',
                         'contract_start_date' => 'nullable',
@@ -67,7 +68,7 @@ class OfficeController extends Controller
                     return response()->json(['errors' => $validator->errors()->all()]);
                 }
             $data = [];
-            $data = $request->only('department_id', 'designation_id', 'station_id', 'cost_center_id', 
+            $data = $request->only('company_id','department_id','designation_id','office_shift_id','station_id', 'cost_center_id', 
             'joining_date', 'confirmation_date', 'expected_confirmation_days', 'contract_start_date', 
             'contract_end_date', 'resign_date', 'leaving_reason_id', 'employee_status_id', 'gl_class_id', 
             'region_id', 'status_id','leaving_date');

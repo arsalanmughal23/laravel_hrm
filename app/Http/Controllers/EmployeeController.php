@@ -347,8 +347,17 @@ class EmployeeController extends Controller
             $loanTypes = LoanType::select('id','type_name')->get();
             $deductionTypes = DeductionType::select('id','type_name')->get();
             $roles = Role::where('id', '!=', 3)->where('is_active', 1)->select('id', 'name')->get();
-            $all_departments = department::select('id', 'department_name')->get();
-            $all_designations = designation::select('id', 'designation_name')->get();
+            $selected_departments = department::select('id', 'department_name')
+                                                ->where('company_id' ,$employee->office?->company_id)
+                                                ->active()
+                                                ->get();
+            $selected_designations = designation::select('id', 'designation_name')
+                                                ->where('department_id' ,$employee->office?->department_id)
+                                                ->active()
+                                                ->get();
+            $selected_office_shifts   = office_shift::select('id','shift_name')
+                                                    ->where('company_id' ,$employee->office?->company_id)
+                                                    ->get();
             $stations = Station::select('id', 'name')->get();
             $regions = Region::select('id', 'name')->get();
             $cost_centers = Constant::where('group',ConstantEnum::GROUP_EMPLOYEE)
@@ -372,7 +381,7 @@ class EmployeeController extends Controller
                                         ->active()
                                         ->get();
 
-            return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies', 'all_departments', 'all_designations',
+            return view('employee.dashboard', compact('employee', 'countries','cities','provinces', 'companies', 'selected_departments', 'selected_designations','selected_office_shifts',
                 'stations', 'regions', 'cost_centers' , 'leaving_reasons','employee_statuses','general_statuses','gl_classes','bank_account_types' ,'departments', 'designations', 'statuses', 'office_shifts', 'document_types',
                 'education_levels', 'language_skills', 'general_skills', 'roles','relationTypes','loanTypes','deductionTypes'));
         } else {
