@@ -34,6 +34,9 @@ class department extends Model
 	{
 		return $this->hasMany(Department::class, 'main_department_id');
 	}
+	public function scopeActive($query){
+		return $query->where('is_active',true);
+	}
 	
 
 }

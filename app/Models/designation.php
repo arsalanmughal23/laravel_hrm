@@ -17,4 +17,8 @@ class designation extends Model
 	public function department(){
 		return $this->hasOne('App\Models\department','id','department_id');
 	}
+	public function scopeActive($query)
+	{
+		return $query->where('is_active',true);
+	}
 }
