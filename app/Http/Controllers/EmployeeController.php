@@ -221,7 +221,7 @@ class EmployeeController extends Controller
 
     public function store(Request $request)
     {
-        Log::debug([$request->all()]);
+        
         $logged_user = auth()->user();
 
         if ($logged_user->can('store-details-employee')) {
