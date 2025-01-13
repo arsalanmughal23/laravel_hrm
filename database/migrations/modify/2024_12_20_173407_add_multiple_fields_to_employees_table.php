@@ -35,16 +35,16 @@ return new class extends Migration
         $table->date('cnic_issuance_date')->nullable()->after('cnic');
         $table->unsignedBigInteger('report_to_employee_id')->nullable()->after('cnic_issuance_date');
         $table->foreign('report_to_employee_id','employees_report_to_employee_id_foreign')->references('id')->on('employees')->onDelete('set NULL');
-        $table->unsignedBigInteger('martial_status_id')->nullable()->after('contact_no');
-        $table->foreign('marital_status_id','employees_martial_status_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
+        $table->unsignedBigInteger('role_template')->nullable()->after('report_to_employee_id');
+        $table->foreign('role_template','employees_role_template_foreign')->references('id')->on('employees')->onDelete('set NULL');
+        $table->unsignedBigInteger('marital_status_id')->nullable()->after('contact_no');
+        $table->foreign('marital_status_id','employees_marital_status_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
         $table->unsignedBigInteger('gender_id')->nullable()->after('contact_no');
         $table->foreign('gender_id','employees_gender_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
         $table->string('place_of_birth')->nullable()->after('contact_no');
         $table->unsignedBigInteger('religion_id')->nullable()->after('cnic_issuance_date');
         $table->foreign('religion_id')->references('id')->on('religions')->onDelete('set NULL');
-        $table->unsignedBigInteger('employee_status_id')->nullable()->after('religion_id');
-        $table->foreign('employee_status_id','employees_employee_status_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
-                       
+                    
         });
     }
 
@@ -57,23 +57,23 @@ return new class extends Migration
         
             // Drop the new columns
             $table->dropForeign('employees_report_to_employee_id_foreign');
-            $table->dropForeign('employees_martial_status_id_foreign');
+            $table->dropForeign('employees_role_template_foreign');
+            $table->dropForeign('employees_marital_status_id_foreign');
             $table->dropForeign('employees_gender_id_foreign');
             $table->dropForeign('employees_religion_id_foreign');
-            $table->dropForeign('employees_employee_status_id_foreign');
     
             // Drop the new columns
             $table->dropColumn([
                 'employee_code',
                 'punch_code',
                 'report_to_employee_id',
+                'role_template',
                 'marital_status_id',
                 'gender_id',
                 'place_of_birth',
                 'cnic',
                 'cnic_issuance_date',
                 'religion_id',
-                'employee_status_id',
             ]);
             
             // Re-add the old columns (if you want to roll back)
