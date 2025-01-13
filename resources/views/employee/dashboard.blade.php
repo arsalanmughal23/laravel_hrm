@@ -195,19 +195,33 @@
                                                                required class="form-control"
                                                                value="{{ $employee->contact_no }}">
                                                     </div>
-
                                                     <div class="col-md-4 form-group">
+                                                        <label>{{trans('file.employee_code')}} <span class="text-danger">*</span></label>
+                                                        <input type="text" name="employee_code" id="employee_code"
+                                                               placeholder="{{trans('file.employee_code')}}"
+                                                               required class="form-control"
+                                                               value="{{ $employee->employee_code }}">
+                                                    </div>
+                                                    <div class="col-md-4 form-group">
+                                                        <label>{{trans('file.punch_code')}} <span class="text-danger">*</span></label>
+                                                        <input type="text" name="punch_code" id="punch_code"
+                                                               placeholder="{{trans('file.punch_code')}}"
+                                                               required class="form-control"
+                                                               value="{{ $employee->punch_code }}">
+                                                    </div>
+
+                                                    {{-- <div class="col-md-4 form-group">
                                                         <label>{{trans('file.Address')}} </label>
                                                         <input type="text" name="address" id="address"
                                                                placeholder="Address"
-                                                               value="{{$employee->address}}" class="form-control">
-                                                    </div>
+                                                               value="{{$employee->employeeAddress?->address}}" class="form-control">
+                                                    </div> --}}
 
-                                                    <div class="col-md-4 form-group">
+                                                    {{-- <div class="col-md-4 form-group">
                                                         <label>{{trans('file.City')}} </label>
                                                         <input type="text" name="city" id="city"
                                                                placeholder="{{trans('file.City')}}"
-                                                               value="{{$employee->city}}" class="form-control">
+                                                               value="{{$employee->employeeAddress?->city->name}}" class="form-control">
                                                     </div>
 
                                                     <div class="col-md-4 form-group">
@@ -215,14 +229,14 @@
                                                         </label>
                                                         <input type="text" name="state" id="state"
                                                                placeholder="{{trans('file.State/Province')}}"
-                                                               value="{{$employee->state}}" class="form-control">
-                                                    </div>
+                                                               value="{{$employee->employeeAddress->province->name}}" class="form-control">
+                                                    </div> --}}
 
-                                                    <div class="col-md-4 form-group">
+                                                    {{-- <div class="col-md-4 form-group">
                                                         <label>{{trans('file.ZIP')}} </label>
                                                         <input type="text" name="zip_code" id="zip_code"
                                                                placeholder="{{trans('file.ZIP')}}"
-                                                               value="{{$employee->zip_code}}" class="form-control">
+                                                               value="{{$employee->employeeAddress->zip_code}}" class="form-control">
                                                     </div>
 
 
@@ -235,11 +249,11 @@
                                                                     data-live-search-style="contains"
                                                                     title="{{__('Selecting',['key'=>trans('file.Country')])}}...">
                                                                 @foreach($countries as $country)
-                                                                    <option value="{{$country->id}}" {{ ($employee->country == $country->id) ? "selected" : '' }}>{{$country->name}}</option>
+                                                                    <option value="{{$country->id}}" {{ ($employee->employeeAddress?->getCountry->id == $country->id) ? "selected" : '' }}>{{$country->name}}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
 
                                                     <div class="col-md-4 form-group">
                                                         <label>{{__('Date Of Birth')}} <span class="text-danger">*</span></label>
@@ -247,39 +261,67 @@
                                                                required autocomplete="off" class="form-control date"
                                                                value="{{$employee->date_of_birth}}">
                                                     </div>
-
                                                     <div class="col-md-4 form-group">
-                                                        <label>{{trans('file.Gender')}}</label>
-                                                        <input type="hidden" name="gender_hidden"
-                                                               value="{{ $employee->gender }}"/>
-                                                        <select name="gender" id="gender"
+                                                        <label>{{__('Place Of Birth')}} <span class="text-danger">*</span></label>
+                                                        <input type="text" name="place_of_birth" id="place_of_birth"
+                                                               required autocomplete="off" class="form-control"
+                                                               value="{{$employee->place_of_birth}}" placeholder="{{trans('file.cnic')}}">
+                                                    </div>
+                                                    <div class="col-md-4 form-group">
+                                                        <label>{{__('CNIC')}} <span class="text-danger">*</span></label>
+                                                        <input type="text" name="cnic" id="cnic"
+                                                               required autocomplete="off" class="form-control" placeholder="{{trans('file.cnic')}}"
+                                                               value="{{$employee->cnic}}">
+                                                    </div>
+                                                    <div class="col-md-4 form-group">
+                                                        <label>{{__('CNIC Issuance Date')}} <span class="text-danger">*</span></label>
+                                                        <input type="text" name="cnic_issuance_date" id="cnic_issuance_date"
+                                                               required autocomplete="off" class="form-control date" placeholder="{{trans('file.cnic_issuance_date')}}"
+                                                               value="{{ $employee->cnic_issuance_date ? $employee->cnic_issuance_date->format('d-m-Y') : '' }}">
+                                                    </div>
+                                                    <div class="col-md-4 form-group">
+                                                        <label>{{trans('file.religion')}}</label>
+                                                        <select name="religion_id" id="religion_id"
                                                                 class="selectpicker form-control"
                                                                 data-live-search="true"
                                                                 data-live-search-style="contains"
-                                                                title="{{__('Selecting',['key'=>trans('file.Gender')])}}...">
-                                                            <option value="Male">{{trans('file.Male')}}</option>
-                                                            <option value="Female">{{trans('file.Female')}}</option>
-                                                            <option value="Other">{{trans('file.Other')}}</option>
+                                                                title="{{__('Selecting',['key'=>trans('file.religion')])}}...">
+                                                            @foreach ($religions as $religion)
+                                                            <option value="{{$religion->id}}" {{ ($employee->religion_id == $religion->id) ? "selected" : '' }}>{{$religion->name}}</option>
+                                                            @endforeach
                                                         </select>
                                                     </div>
-
                                                     <div class="col-md-4 form-group">
                                                         <label>{{__('Marital Status')}} </label>
                                                         <input type="hidden" name="marital_status_hidden"
-                                                               value="{{ $employee->marital_status }}"/>
-                                                        <select name="marital_status" id="marital_status"
+                                                               value="{{ $employee->employeeMaritalStatus }}"/>
+                                                        <select name="marital_status_id" id="marital_status_id"
                                                                 class="selectpicker form-control"
                                                                 data-live-search="true"
                                                                 data-live-search-style="contains"
                                                                 title="{{__('Selecting',['key'=>__('Marital Status')])}}...">
-                                                            <option value="single">{{trans('file.Single')}}</option>
-                                                            <option value="married">{{trans('file.Married')}}</option>
-                                                            <option value="widowed">{{trans('file.Widowed')}}</option>
-                                                            <option value="divorced">{{trans('file.Divorced/Separated')}}</option>
+                                                                @foreach ($marital_statuses as $marital_status)
+                                                                <option value="{{$marital_status->id}}" {{ ($employee->marital_status_id == $marital_status->id) ? "selected" : '' }}>{{$marital_status->text}}</option>
+                                                                @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4 form-group">
+                                                        <label>{{trans('file.Gender')}}</label>
+                                                        <input type="hidden" name="gender_hidden"
+                                                               value="{{ $employee->employeeGender?->id }}"/>
+                                                        <select name="gender_id" id="gender_id"
+                                                                class="selectpicker form-control"
+                                                                data-live-search="true"
+                                                                data-live-search-style="contains"
+                                                                title="{{__('Selecting',['key'=>trans('file.Gender')])}}...">
+                                                            @foreach ($genders as $gender)
+                                                            <option value="{{$gender->id}}" {{ ($employee->employeeGender?->id == $gender->id) ? "selected" : '' }}>{{$gender->text}}</option>
+                                                                
+                                                            @endforeach
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-md-4">
+                                                    {{-- <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>{{trans('file.Company')}} <span class="text-danger">*</span></label>
                                                             <input type="hidden" name="company_id_hidden"
@@ -330,7 +372,7 @@
                                                                 <option value="{{$designation->id}}">{{$designation->designation_name}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
+                                                    </div> --}}
 
                                                     <div class="col-md-4 form-group">
                                                         <label>{{trans('file.Role')}} <span class="text-danger">*</span></label>
@@ -349,7 +391,7 @@
                                                         </select>
                                                     </div>
 
-                                                    <div class="col-md-4">
+                                                    {{-- <div class="col-md-4">
                                                         <div class="form-group">
                                                             <label>{{trans('file.Status')}} <span class="text-danger">*</span></label>
                                                             <input type="hidden" name="status_id_hidden"
@@ -364,9 +406,9 @@
                                                                 @endforeach
                                                             </select>
                                                         </div>
-                                                    </div>
+                                                    </div> --}}
 
-                                                    <div class="col-md-4 form-group">
+                                                    {{-- <div class="col-md-4 form-group">
                                                         <label>{{trans('file.Office_Shift')}} <span class="text-danger">*</span></label>
                                                         <input type="hidden" name="office_shift_id_hidden"
                                                                value="{{ $employee->office_shift_id }}"/>
@@ -379,9 +421,9 @@
                                                                 <option value="{{$office_shift->id}}">{{$office_shift->shift_name}}</option>
                                                             @endforeach
                                                         </select>
-                                                    </div>
+                                                    </div> --}}
 
-                                                    <div class="col-md-4 form-group">
+                                                    {{-- <div class="col-md-4 form-group">
                                                         <label>{{__('Date Of Joining')}} <span class="text-danger">*</span> </label>
                                                         <input type="text" name="joining_date" id="joining_date"
                                                                autocomplete="off" class="form-control date"
@@ -393,7 +435,7 @@
                                                         <input type="text" name="exit_date" id="exit_date"
                                                             class="form-control date"
                                                                value="{{$employee->exit_date}}">
-                                                    </div>
+                                                    </div> --}}
 
                                                     <div class="col-md-4">
                                                         <label class="text-bold">{{__('Attendance Type')}} <span class="text-danger">*</span></label>
@@ -403,7 +445,28 @@
                                                                 <option value="ip_based" @if($employee->attendance_type=='ip_based') selected  @endif>{{__('IP Based')}}</option>
                                                         </select>
                                                     </div>
-
+                                                    <div class="col-md-4 form-group">
+                                                        <label class="text-bold">{{trans('file.reporting_manager')}}</label>
+                                                        <select name="report_to_employee_id" id="report_to_employee_id" class="selectpicker form-control"
+                                                                data-live-search="true" data-live-search-style="contains"
+                                                                title="{{__('Selecting',['key'=>trans('file.reporting_manager')])}}...">
+                                                            @foreach ($employees as $emp)
+                                                                <option value="{{$emp->id}}" {{($employee->reportsManager?->id) == $emp->id ? "selected" : '' }}>{{$emp->full_name}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="mt-4 form-check">
+                                                            <input type="checkbox" name="allow_manual_attendance" class="form-check-input" value="1" {{ $employee->allow_manual_attendance ? 'checked' : '' }} />
+                                                            <label class="mr-4 form-check-label"><strong>{{trans('file.allow_manual_attendance')}} </strong></label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-4">
+                                                        <div class="mt-4 form-check">
+                                                            <input type="checkbox" name="allow_login" class="form-check-input" value="1" {{ $employee->allow_login ? 'checked' : '' }} />
+                                                            <label class="mr-4 form-check-label"><strong>{{trans('file.allow_login')}} </strong></label>
+                                                        </div>
+                                                    </div>
                                                     {{-- <div class="col-md-4 form-group">
                                                         <label>{{__('Total Annual Leave')}}  (Year - {{date('Y')}})</label>
                                                         <input type="number" min="0" name="total_leave" id="total_leave" autocomplete="off" class="form-control" value="{{$employee->total_leave}}">
@@ -422,7 +485,7 @@
                                                         <div class="form-group row mb-0">
                                                             <div class="col-md-6 offset-md-4">
                                                                 <button type="submit" class="btn btn-primary">
-                                                                    {{trans('file.Save')}}
+                                                                    {{trans('file.Update')}}
                                                                 </button>
                                                             </div>
                                                         </div>
@@ -578,16 +641,16 @@
 @push('scripts')
 <script type="text/javascript">
 
-    $('select[name="gender"]').val($('input[name="gender_hidden"]').val());
+    $('select[name="gender_id"]').val($('input[name="gender_hidden"]').val());
     $('#role_users_id').selectpicker('val', $('input[name="role_user_hidden"]').val());
-    $('#marital_status').selectpicker('val', $('input[name="marital_status_hidden"]').val());
+    $('#marital_status_id').selectpicker('val', $('input[name="marital_status_hidden"]').val());
 
-    $('#company_id').selectpicker('val', $('input[name="company_id_hidden"]').val());
-    $('#department_id').selectpicker('val', $('input[name="department_id_hidden"]').val());
-    $('#designation_id').selectpicker('val', $('input[name="designation_id_hidden"]').val());
+    // $('#company_id').selectpicker('val', $('input[name="company_id_hidden"]').val());
+    // $('#department_id').selectpicker('val', $('input[name="department_id_hidden"]').val());
+    // $('#designation_id').selectpicker('val', $('input[name="designation_id_hidden"]').val());
 
-    $('#status_id').selectpicker('val', $('input[name="status_id_hidden"]').val());
-    $('#office_shift_id').selectpicker('val', $('input[name="office_shift_id_hidden"]').val());
+    // $('#status_id').selectpicker('val', $('input[name="status_id_hidden"]').val());
+    // $('#office_shift_id').selectpicker('val', $('input[name="office_shift_id_hidden"]').val());
 
 
     $(document).ready(function () {

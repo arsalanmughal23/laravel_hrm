@@ -39,6 +39,10 @@ class LoginController extends Controller
         $user->last_login_ip = $request->ip();
         $user->save();
 
+        if(!$user->allow_login)
+        {
+            return abort(403);
+        }
         if ($user->role_users_id == 1)
         {
             return redirect('/admin/dashboard');

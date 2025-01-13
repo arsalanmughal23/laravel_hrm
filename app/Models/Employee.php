@@ -10,14 +10,11 @@ use Illuminate\Notifications\Notifiable;
 class Employee extends Model
 {
 	use Notifiable;
-	// protected $fillable = [
-	// 	'id','first_name','last_name','staff_id','email','contact_no','date_of_birth','gender','status_id','office_shift_id','salary_id','location_id','designation_id', 'company_id', 'department_id','is_active',
-	// 	'role_users_id','permission_role_id','joining_date','exit_date','marital_status','address','city','state','country','zip_code','cv','skype_id','fb_id',
-	// 	'twitter_id','linkedIn_id','blogger_id','basic_salary','payslip_type','leave_id','attendance_id','performance_id','award_id','transfer_id','resignation_id',
-	// 	'travel_id','promotion_id','complain_id','warning_id','termination_id','attendance_type','total_leave','remaining_leave','pension_type','pension_amount',
-	// 	'report_to_employee_id','allow_manual_attendance','religion_id',
-	// 	];
 	protected $guarded = [];
+
+	protected $casts = [
+		'cnic_issuance_date' => 'date',
+	];
 
 
 	public function getFullNameAttribute() {
@@ -105,10 +102,14 @@ class Employee extends Model
 		return $this->hasOne(Office::class);
 	}
 	public function employeeGender(){
-		return $this->belongsTo(Constant::class,'gender_id','id');
+		return $this->belongsTo(Constant::class,'gender_id');
 	}
 	public function employeeMaritalStatus(){
 		return $this->belongsTo(Constant::class,'marital_status_id','id');
+	}
+	public function reportsManager()
+	{
+		return $this->belongsTo(Employee::class,'report_to_employee_id');
 	}
 	public function setDateOfBirthAttribute($value)
 	{
@@ -150,6 +151,10 @@ class Employee extends Model
 		else{
 			return Carbon::parse($value)->format(env('Date_Format'));
 		}
+	}
+	public function scopeActive()
+	{
+		return $this->where('is_active',true);
 	}
 
 
