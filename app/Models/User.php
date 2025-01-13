@@ -26,6 +26,8 @@ class User extends Authenticatable
         'password',
         'role_users_id',
         'contact_no',
+        'allow_login',
+        'allow_manual_attendance',
         'profile_photo',
         'profile_bg',
         'is_active',

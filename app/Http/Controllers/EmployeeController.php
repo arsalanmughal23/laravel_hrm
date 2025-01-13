@@ -255,11 +255,12 @@ class EmployeeController extends Controller
                 if ($validator->fails()) {
                     return response()->json(['errors' => $validator->errors()->all()]);
                 }
-
+                $allowManualAttendance = $request->has('allow_manual_attendance') ? 1 : 0;
+                $allowLogin = $request->has('allow_login') ? 1 : 0;
                 $data = [];
                 $data = $request->only('first_name', 'last_name', 'staff_id', 'email', 'contact_no', 'date_of_birth', 'place_of_birth' ,
                 'gender_id','marital_status_id', 'cnic','cnic_issuance_date','report_to_employee_id', 'employee_code','punch_code',
-                'religion_id','role_users_id','attendance_type','allow_login','allow_manual_attendance');
+                'religion_id','role_users_id','attendance_type');
                 $data['is_active'] = 1;
                 $data['email'] = strtolower(trim($request->email));
 
@@ -272,6 +273,8 @@ class EmployeeController extends Controller
                 $user['role_users_id'] = $request->role_users_id;
                 $user['contact_no'] = $request->contact_no;
                 $user['is_active'] = 1;
+                $user['allow_login'] = $allowLogin;
+                $user['allow_manual_attendance'] = $allowManualAttendance;
 
                 $photo = $request->profile_photo;
                 $file_name = null;
@@ -512,11 +515,9 @@ class EmployeeController extends Controller
                 $allowManualAttendance = $request->has('allow_manual_attendance') ? 1 : 0;
                 $allowLogin = $request->has('allow_login') ? 1 : 0;
                 $data = $request->only('first_name', 'last_name', 'staff_id', 'email', 'contact_no', 'date_of_birth','place_of_birth', 'gender_id',
-                'role_users_id', 'employee_code','punch_code','cnic','cnic_issuance_date','religion_id','report_to_employee_id','allow_manual_attendance',
-                'marital_status_id','permission_role_id', 'attendance_type','allow_manual_attendance','allow_login'
+                'role_users_id', 'employee_code','punch_code','cnic','cnic_issuance_date','religion_id','report_to_employee_id',
+                'marital_status_id','permission_role_id', 'attendance_type'
             );
-                $data['allow_manual_attendance'] = $allowManualAttendance;
-                $data['allow_login'] = $allowLogin;
                 $data['email'] = strtolower(trim($request->email));
                 $data['is_active'] = 1;
                 // dd($data);
@@ -530,6 +531,8 @@ class EmployeeController extends Controller
                 $user['role_users_id'] = $request->role_users_id;
                 $user['contact_no'] = $request->contact_no;
                 $user['is_active'] = 1;
+                $user['allow_login'] = $allowLogin;
+                $user['allow_manual_attendance'] = $allowManualAttendance;
 
                 // return response()->json($data);
 
