@@ -35,8 +35,6 @@ return new class extends Migration
         $table->date('cnic_issuance_date')->nullable()->after('cnic');
         $table->unsignedBigInteger('report_to_employee_id')->nullable()->after('cnic_issuance_date');
         $table->foreign('report_to_employee_id','employees_report_to_employee_id_foreign')->references('id')->on('employees')->onDelete('set NULL');
-        $table->boolean('allow_manual_attendance')->default(false)->after('report_to_employee_id');
-        $table->boolean('allow_login')->default(true)->after('allow_manual_attendance');
         $table->unsignedBigInteger('martial_status_id')->nullable()->after('contact_no');
         $table->foreign('marital_status_id','employees_martial_status_id_foreign')->references('id')->on('constants')->onDelete('set NULL');
         $table->unsignedBigInteger('gender_id')->nullable()->after('contact_no');
@@ -69,8 +67,6 @@ return new class extends Migration
                 'employee_code',
                 'punch_code',
                 'report_to_employee_id',
-                'allow_manual_attendance',
-                'allow_login',
                 'marital_status_id',
                 'gender_id',
                 'place_of_birth',
