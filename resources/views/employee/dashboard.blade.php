@@ -119,6 +119,12 @@
                                                aria-selected="false">{{__('Address')}}</a>
                                         </li>
                                         <li class="nav-item">
+                                            <a class="nav-link" href="{{route('benefits.show',$employee)}}"
+                                               id="benefits-tab" data-toggle="tab" data-table="benefits"
+                                               data-target="#Benefits" role="tab" aria-controls="Benefits"
+                                               aria-selected="false">{{__('Benefits')}}</a>
+                                        </li>
+                                        <li class="nav-item">
                                             <a class="nav-link" href="{{route('work_experience.show',$employee)}}"
                                                id="work_experience-tab" data-toggle="tab" data-table="work_experience"
                                                data-target="#Work_experience" role="tab" aria-controls="Work_experience"
@@ -477,6 +483,12 @@
                                             <hr>
                                             @include('employee.office.index')
                                         </div>
+                                        <div class="tab-pane fade" id="Benefits" role="tabpanel"
+                                        aria-labelledby="benefits-tab">
+                                       {{__('Benefits')}}
+                                       <hr>
+                                       @include('employee.benefits.index')
+                                   </div>
                                         <div class="tab-pane fade" id="Work_experience" role="tabpanel"
                                              aria-labelledby="work_experience-tab">
                                             {{__('Work Experience')}}
@@ -627,7 +639,9 @@
     $('[data-table="address"]').one('click', function (e) {
         @include('employee.address.index_js')
     });
-
+    $('[data-table="benefits"]').one('click', function (e) {
+        @include('employee.benefits.index_js')
+    });
     $('[data-table="work_experience"]').one('click', function (e) {
         @include('employee.work_experience.index_js')
     });

@@ -110,6 +110,9 @@ class Employee extends Model
 	public function employeeMaritalStatus(){
 		return $this->belongsTo(Constant::class,'marital_status_id','id');
 	}
+	public function benefits(){
+		return $this->hasMany(Benefit::class);
+	}
 	public function setDateOfBirthAttribute($value)
 	{
 		$this->attributes['date_of_birth'] = Carbon::createFromFormat(env('Date_Format'), $value)->format('Y-m-d');
