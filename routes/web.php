@@ -10,6 +10,7 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\AssignRoleController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\AwardController;
+use App\Http\Controllers\BenefitController;
 use App\Http\Controllers\CalendarableController;
 use App\Http\Controllers\ClientAutoUpdateController;
 use App\Http\Controllers\ClientController;
@@ -283,6 +284,14 @@ Route::group(['middleware' => ['XSS','checkDataTable']], function () use ($isCrm
         Route::get('office/{employee}',[OfficeController::class,'show'])->name('office.show');
         Route::post('office/update',[OfficeController::class,'update'])->name('office.update');
         Route::post('office/{employee}/store',[OfficeController::class,'store'])->name('office.store');
+        // Route::resource('benefits',BenefitController::class);
+    ;
+        Route::get('benefits', [BenefitController::class, 'index'])->name('benefits.index');
+        Route::get('benefits/{id}/edit', [BenefitController::class, 'edit'])->name('benefits.edit');
+        Route::get('benefits/{employee}', [BenefitController::class, 'show'])->name('benefits.show');
+        Route::post('benefits/update', [BenefitController::class, 'update'])->name('benefits.update');
+        Route::post('benefits/{employee}/store', [BenefitController::class, 'store'])->name('benefits.store');
+        Route::get('benefits/{id}/delete', [BenefitController::class, 'destroy'])->name('benefits.destroy');
 
         Route::get('work_experience', [EmployeeWorkExperienceController::class, 'index'])->name('work_experience.index');
         Route::get('work_experience/{id}/edit', [EmployeeWorkExperienceController::class, 'edit'])->name('work_experience.edit');
